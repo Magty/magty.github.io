@@ -1,5 +1,5 @@
 const path = require('path')
-const defaultSettings = require('./src/settings')
+const defaultSettings = require('./src/config/settings')
 
 const resolve = dir => path.join(__dirname, dir)
 
@@ -9,10 +9,10 @@ const name = defaultSettings.title || '端午'
 
 module.exports = {
   lintOnSave: process.env.NODE_ENV !== 'production',
-  productionSourceMap: false,
+  // productionSourceMap: false,
   devServer: {
     // open: true, // 运行时默认打开浏览器
-    proxy: 'http://localhost:3000'
+    // proxy: 'http://localhost:3000'
   },
   configureWebpack: {
     name: name,
