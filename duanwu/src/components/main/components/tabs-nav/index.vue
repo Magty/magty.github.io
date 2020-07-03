@@ -88,6 +88,7 @@ export default {
     },
     handleBtnClick(name) {
       console.log(name)
+      this.removeTab({ route: this.$route, name })
       // this.$emit('on-closetabs', name)
     },
     beforeRemove(id) {
@@ -104,7 +105,6 @@ export default {
           console.log(' 23232323=' + nextRoute && nextRoute.name)
           this.$router.push(nextRoute)
         }
-        this.$forceUpdate()
       })
     },
     handleClickTab(name) {

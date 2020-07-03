@@ -76,10 +76,37 @@ export default {
         closePage(state, route)
       }
     },
-    removeTab(state, route) {
+
+    removeTab(state, payload) {
+      const {
+        route,
+        name
+      } = payload
       const index = state.tabsNavList.findIndex(item => routeEqual(item, route))
-      console.log('del:' + index)
-      state.tabsNavList.splice(index, 1)
+      console.log(name + '===del:' + index)
+      if (name === 'left') {
+        if (index > 1) {
+          state.tabsNavList.splice(0, index)
+        } else {
+          return
+        }
+      } else if (name === 'right') {
+        if ((state.tabsNavList.length - 1) > index) {
+          state.tabsNavList.splice(index + 1, state.tabsNavList.length - 1 - index)
+        } else {
+          return
+        }
+      } else if (name === 'others') {
+        if (state.tabsNavList.length === 1) {
+          return
+        } else {
+          state.tabsNavList = [state.tabsNavList.splice(index, 1)[0]]
+        }
+      } else if (name === 'all') {
+        state.tabsNavList.splice(0, state.tabsNavList.length)
+      } else {
+        state.tabsNavList.splice(index, 1)
+      }
       setTabsListInLocalstorage([...state.tabsNavList])
     },
     addTab(state, {
@@ -135,11 +162,15 @@ export default {
         let nextRoute = {}
 
         if ((state.tabsNavList.length === 1 && routeEqual(delRoute, state.homeRoute)) || (state.tabsNavList.length > 1 && !routeEqual(delRoute, route))) {
-          commit('removeTab', delRoute)
+          commit('removeTab', {
+            route: delRoute
+          })
           resolve()
         } else {
           nextRoute = getNextRoute(state.tabsNavList, route, delRoute)
-          commit('removeTab', delRoute)
+          commit('removeTab', {
+            route: delRoute
+          })
           const {
             name,
             params,
