@@ -19,14 +19,15 @@
           </div>
           <div class="ivu-login-password">
             <FormItem prop="password">
-              <i-Input
+              <i-input
                 size="large"
                 type="password"
+                password
                 v-model="formValidate.password"
                 placeholder="请输入密码"
               >
                 <Icon type="ios-lock-outline" slot="prepend"></Icon>
-              </i-Input>
+              </i-input>
             </FormItem>
           </div>
           <div class="page-account-auto-login">

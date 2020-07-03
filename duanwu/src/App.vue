@@ -5,14 +5,14 @@
 </template>
 
 <style lang="scss">
-.size {
+#app,
+body,
+html {
   height: 100%;
 }
-html,
+
 body {
-  @extend .size;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
+  background-color: #f7f7f7;
+  font-size: 14px;
 }
 </style>
