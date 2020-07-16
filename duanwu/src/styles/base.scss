@@ -1,0 +1,36 @@
+.i-copyright {
+  flex: 0 0 auto
+}
+
+.i-copyright-hidden {
+  display: none
+}
+
+.i-link {
+  cursor: pointer
+}
+
+.i-link-color,
+.i-link-color:active,
+.i-link-color:hover {
+  color: inherit
+}
+
+.i-frame {
+  overflow: hidden;
+  overflow-y: auto
+}
+
+.i-frame,
+.i-frame-iframe {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0
+}
+
+.i-frame-iframe {
+  width: 100%;
+  height: 100%
+}

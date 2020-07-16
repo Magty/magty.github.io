@@ -1,9 +1,11 @@
+const {
+  title
+} = require('./src/config/settings')
 const path = require('path')
-const defaultSettings = require('./src/config/settings')
 
 const resolve = dir => path.join(__dirname, dir)
 
-const name = defaultSettings.title || '端午'
+const name = title || '端午'
 // port = 9527 npm run dev OR npm run dev --port = 9527
 // const port = process.env.port || process.env.npm_config_port || 9527
 

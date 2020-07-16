@@ -13,14 +13,14 @@ export const getUserInfo = ({
 }
 
 export const login = ({
-  userName,
+  username,
   password
 }) => {
   return axios.request({
     url: '/login',
     method: 'post',
     data: {
-      userName,
+      username,
       password
     }
   })

@@ -83,3 +83,61 @@ export const off = (function () {
     }
   }
 })()
+
+export const debounce = function (func, wait, extra) {
+  if (typeof func !== 'function') {
+    throw new Error('参数错误')
+  }
+  let timer = null
+  let result
+  const {
+    maxWait,
+    trailing
+  } = extra
+  const debounced = () => {
+    const args = arguments
+    if (timer) {
+      clearTimeout(timer)
+    }
+    const waitTime = Math.max(maxWait || 0, wait)
+    if (trailing) {
+      const callNow = !timer
+      timer = setTimeout(() => {
+        timer = null
+      }, waitTime)
+      if (callNow) {
+        result = func.apply(...args)
+      }
+    } else {
+      timer = setTimeout(() => {
+        func.apply(...args)
+      }, waitTime)
+    }
+    return result
+  }
+  debounced.cancel = () => {
+    clearTimeout(timer)
+    timer = null
+  }
+  debounced.flush = () => {
+    if (timer) {
+      debounced()
+    }
+  }
+  return debounced
+}
+
+export const throttle = function (func, wait, extra) {
+  if (typeof func !== 'function') {
+    throw new Error('参数不对')
+  }
+  const {
+    leading,
+    trailing
+  } = extra || {}
+  debounce(func, wait, {
+    leading,
+    maxWait: wait,
+    trailing
+  })
+}

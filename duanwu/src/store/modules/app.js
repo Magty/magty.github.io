@@ -148,14 +148,14 @@ export default {
     }
   },
   actions: {
-    tabRemove({
+    async tabRemove({
       commit,
       state
     }, {
       id,
       route
     }) {
-      return new Promise(resolve => {
+      return await new Promise(resolve => {
         const delRoute = getRouteByName(id)
         console.log(state.tabsNavList.length)
         console.log(delRoute)

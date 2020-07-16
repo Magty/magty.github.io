@@ -6,8 +6,8 @@
       @on-click="handleClickTab"
       @on-tab-remove="handleTabRemove"
       :before-remove="beforeRemove"
-      closable
       :animated="false"
+      closable
     >
       <TabPane
         v-for="(tab,index) in tabsNavlist"
@@ -15,6 +15,7 @@
         :label="label(tab.meta)"
         :key="`tabPane-${index}`"
         :name="getTabNameByRoute(tab)"
+        :index="index+1"
       ></TabPane>
     </Tabs>
     <Dropdown class="i-layout-tabs-close" @on-click="handleBtnClick">
@@ -93,10 +94,11 @@ export default {
     },
     beforeRemove(id) {
       console.log('before:' + id)
+      // this.removeTab({ route: this.tabsNavlist[id] })
     },
     handleTabRemove(id) {
       console.log('==index:' + id)
-      // this.removeTab({ route: this.$route })
+      // this.removeTab({ route: id })
       this.tabRemove({
         id,
         route: this.$route

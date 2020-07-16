@@ -9,6 +9,7 @@ import {
 
 const {
   title,
+  titleSuffix,
   useI18n
 } = config
 
@@ -351,4 +352,20 @@ export const setTitle = (routeItem, vm) => {
   const pageTitle = showTitle(handledRoute, vm)
   const resTitle = pageTitle ? `${title} - ${pageTitle}` : title
   window.document.title = resTitle
+}
+
+function translateTitle() {
+  if (arguments && arguments.length > 0) {
+    const ti = arguments[0]
+    return (window && window.$t && ti.indexOf('$t:')) ? window.$t(ti.split('$t:')[1]) : ti
+  }
+}
+
+export const setTitles = ({
+  title,
+  count
+}) => {
+  title = translateTitle(title)
+  const content = title ? ''.concat(title, '-').concat(titleSuffix) : titleSuffix
+  window.document.title = content
 }
