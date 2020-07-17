@@ -127,15 +127,15 @@ export const debounce = function (func, wait, extra) {
   return debounced
 }
 
-export const throttle = function (func, wait, extra) {
+export const throttle = function (func, wait, options) {
   if (typeof func !== 'function') {
     throw new Error('参数不对')
   }
   const {
     leading,
     trailing
-  } = extra || {}
-  debounce(func, wait, {
+  } = options || {}
+  return debounce(func, wait, {
     leading,
     maxWait: wait,
     trailing

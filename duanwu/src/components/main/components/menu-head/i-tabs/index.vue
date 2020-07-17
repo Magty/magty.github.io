@@ -84,22 +84,20 @@ export default {
       return this.hideSider
     },
     styles: function() {
-      const left = this.isHeaderStick
-        ? 0
-        : this.menuCollapse
-        ? 80
-        : menuSideWidth
-      return {
-        top:
-          this.tabsFix && !this.headerFix
-            ? ''.concat(64 - this.scrollTop, 'px')
-            : '',
-        width:
-          !this.isMobile && this.tabsFix
-            ? 'calc(100% - '.concat(left, 'px)')
-            : '100%',
-        left: ''.concat(left, 'px')
+      const style = {}
+      if (this.tabsFix && !this.headerFix) {
+        style.top = ''.concat(64 - this.scrollTop, 'px')
       }
+      if (!this.isMobile && this.tabsFix) {
+        const left = this.isHeaderStick
+          ? 0
+          : this.menuCollapse
+          ? 80
+          : menuSideWidth
+        style.width = 'calc(100% - '.concat(left, 'px)')
+        style.left = ''.concat(left, 'px')
+      }
+      return style
     }
   },
   methods: {

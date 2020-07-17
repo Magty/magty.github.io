@@ -16,7 +16,8 @@
 import { mapState } from 'vuex'
 
 import menuHeadTitle from '../menu-head-title'
-import { throttle, on, off } from '@/utils/tools'
+import { /* throttle,  */ on, off } from '@/utils/tools'
+import lodash from 'lodash'
 import { addRoutes } from '@/utils/route'
 
 export default {
@@ -68,13 +69,15 @@ export default {
     handleCheckWidth: function() {
       this.$nextTick(() => {
         this.isLimit =
-          this.$parent.$el.width - this.maxWidth <= this.breadcrumbWidth
+          this.$parent.$el.clientWidth - this.maxWidth <= this.breadcrumbWidth
       })
     },
     handleGetWidth: function() {
       this.isLimit = false
       this.$nextTick(() => {
-        this.breadcrumbWidth = parseInt(this.$refs.breadcrumb.$el.width)
+        if (this.$refs.breadcrumb) {
+          this.breadcrumbWidth = parseInt(this.$refs.breadcrumb.$el.clientWidth)
+        }
       })
     }
   },
@@ -102,7 +105,7 @@ export default {
     }
   },
   mounted: function() {
-    this.handleResize = throttle(this.handleCheckWidth, 100, {
+    this.handleResize = lodash.throttle(this.handleCheckWidth, 100, {
       leading: false
     })
     on(window, 'resize', this.handleResize)

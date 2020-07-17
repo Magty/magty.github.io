@@ -10,10 +10,12 @@
       >
         <Icon v-if="item.icon" :type="item.icon"></Icon>
         <Icon v-else-if="item.customIcon" :custom="item.customIcon"></Icon>
-        {{ _s(item.title)}}
+        <slot name="links">{{ item.title }}</slot>
       </a>
     </div>
-    <div v-if="copyright && $slots.copyright" class="ivu-global-footer-copyright">{{ copyright }}</div>
+    <div v-if="copyright || $slots.copyright" class="ivu-global-footer-copyright">
+      <slot name="copyright">{{ copyright }}</slot>
+    </div>
   </footer>
 </template>
 
