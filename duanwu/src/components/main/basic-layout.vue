@@ -6,37 +6,26 @@
       :class="siderClasses"
       :width="menuSideWidth"
     >
-      <menu-side
-        :hide-logo="isHeaderStick && headerFix && showHeader"
-      ></menu-side>
+      <menu-side :hide-logo="isHeaderStick && headerFix && showHeader"></menu-side>
     </Sider>
     <Layout class="i-layout-inside" :class="insideClasses">
       <transition name="fade-quick">
         <Header
+          v-show="showHeader"
           class="i-layout-header"
           :class="headerClasses"
           :style="headerStyle"
         >
           <header-logo v-if="isMobile && showMobileLogo"></header-logo>
-          <header-logo
-            v-if="!isMobile && isHeaderStick && headerFix"
-          ></header-logo>
+          <header-logo v-if="!isMobile && isHeaderStick && headerFix"></header-logo>
           <header-collapse
             v-if="!((!isMobile && !showSiderCollapse) || hideSider)"
             @on-toggle-draw="handleToggleDrawer"
           ></header-collapse>
-          <header-reload
-            v-if="!isMobile && showReload"
-            @on-reload="handleReload"
-          ></header-reload>
+          <header-reload v-if="!isMobile && showReload" @on-reload="handleReload"></header-reload>
           <menu-head ref="menuHead" v-if="headerMenu && !isMobile"></menu-head>
-          <header-breadcrumb
-            ref="breadcrumb"
-            v-if="showBreadcrumb && !headerMenu && !isMobile"
-          ></header-breadcrumb>
-          <header-search
-            v-if="!(!showSearch || headerMenu || isMobile || showBreadcrumb)"
-          ></header-search>
+          <header-breadcrumb ref="breadcrumb" v-if="showBreadcrumb && !headerMenu && !isMobile"></header-breadcrumb>
+          <header-search v-if="!(!showSearch || headerMenu || isMobile || showBreadcrumb)"></header-search>
           <div class="i-layout-header-right">
             <header-search
               v-if="
@@ -46,9 +35,7 @@
             ></header-search>
             <menu-head v-if="headerMenu && isMobile"></menu-head>
             <header-log v-if="isDesktop && showLog"></header-log>
-            <header-fullscreen
-              v-if="isDesktop && showFullscreen"
-            ></header-fullscreen>
+            <header-fullscreen v-if="isDesktop && showFullscreen"></header-fullscreen>
             <header-notice v-if="showNotice"></header-notice>
             <header-user></header-user>
             <header-i18n v-if="showI18n"></header-i18n>
@@ -69,12 +56,7 @@
       <copyright></copyright>
     </Layout>
     <div>
-      <Drawer
-        placement="left"
-        :closable="false"
-        :class-name="drawerClasses"
-        v-model="showDrawer"
-      >
+      <Drawer placement="left" :closable="false" :class-name="drawerClasses" v-model="showDrawer">
         <menu-side></menu-side>
       </Drawer>
     </div>
@@ -160,6 +142,13 @@ export default {
     ...mapGetters('admin/menu', ['hideSider']),
     isHeaderStick: function() {
       return this.hideSider ? true : this.hideSider
+    },
+    showHeader: function() {
+      let flag = true
+      if (this.headerFix && this.headerHide && !this.headerVisible) {
+        flag = false
+      }
+      return flag
     },
     headerClasses: function() {
       return [

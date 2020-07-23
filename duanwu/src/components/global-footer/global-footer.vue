@@ -1,6 +1,6 @@
 <template>
   <footer class="ivu-global-footer">
-    <div v-if="links.length || $slots.links" class="ivu-global-footer-links">
+    <div v-if="links.length" class="ivu-global-footer-links">
       <a
         v-for="item in links"
         :key="item.key"
@@ -10,10 +10,10 @@
       >
         <Icon v-if="item.icon" :type="item.icon"></Icon>
         <Icon v-else-if="item.customIcon" :custom="item.customIcon"></Icon>
-        <slot name="links">{{ item.title }}</slot>
+        {{ item.title }}
       </a>
     </div>
-    <div v-if="copyright || $slots.copyright" class="ivu-global-footer-copyright">
+    <div v-if="copyright" class="ivu-global-footer-copyright">
       <slot name="copyright">{{ copyright }}</slot>
     </div>
   </footer>

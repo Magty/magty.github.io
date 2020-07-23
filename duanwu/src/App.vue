@@ -123,6 +123,9 @@ body {
   background: #808695;
   border-radius: 4px;
 }
+.ivu-menu-dark {
+  background: #191a23;
+}
 .ivu-block {
   display: block;
 }

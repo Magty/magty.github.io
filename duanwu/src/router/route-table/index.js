@@ -23,7 +23,7 @@ export default [{
           auth: true
         },
         component: () => import('@/views/single-page/users')
-      }
+      },
       /* {
         path: 'refresh',
         name: 'refresh',
@@ -49,7 +49,7 @@ export default [{
         render: function (func) {
           func()
         }
-      },
+      }, */
       {
         path: 'i18n',
         name: 'i18n',
@@ -57,8 +57,8 @@ export default [{
           title: '$t:menu.i18n',
           auth: true
         },
-        component: () => import('')
-      } */
+        component: () => import('@/views/i18n')
+      }
     ]
   },
   dashboardRouters,

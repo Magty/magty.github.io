@@ -153,8 +153,8 @@
       </div>
       <div class="i-layout-header-setting-item">
         <span class="i-layout-header-setting-item-desc">
-          全局面包屑显示图标
-          <Tooltip placement="top" content="需开启全局面包屑导航" transfer>
+          显示全局面包屑导航
+          <Tooltip placement="top" content="headerMenu 开启时无效" transfer>
             <Icon type="ios-help-circle-outline"></Icon>
           </Tooltip>
         </span>
@@ -221,7 +221,7 @@
         :class="{'i-layout-header-setting-item-disabled': !tabs}"
       >
         <span class="i-layout-header-setting-item-desc">
-          全局面包屑显示图标
+          多页签显示图标
           <Tooltip placement="top" content="需开启多页签" transfer>
             <Icon type="ios-help-circle-outline"></Icon>
           </Tooltip>

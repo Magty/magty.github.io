@@ -496,9 +496,9 @@ export default {
       &-fix {
         .i-layout-content-main {
           margin-top: 44px;
-          /* .i-layout-page-header {
+          .i-layout-page-header {
             margin-top: 0;
-          } */
+          }
         }
       }
     }

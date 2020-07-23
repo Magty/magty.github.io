@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import GlobalFooter from './global-footer'
+import GlobalFooter from '../global-footer'
 export default {
   name: 'copyright',
   components: {

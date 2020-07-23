@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import NotificationCom from './notification'
+import PageHeader from './page-header'
 
 /* const Notification = {
   install: function (Vue) {
@@ -8,7 +9,8 @@ import NotificationCom from './notification'
 } */
 
 const customComs = {
-  Notification: NotificationCom
+  Notification: NotificationCom,
+  PageHeader
 }
 
 const install = () => {
