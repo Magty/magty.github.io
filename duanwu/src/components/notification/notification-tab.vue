@@ -135,7 +135,7 @@ export default {
   watch: {
     count: {
       handler: function() {
-        // this.NotificationInstance.handleGetCountAll()
+        this.NotificationInstance.handleGetCountAll()
       },
       immediate: true
     }

@@ -242,11 +242,15 @@ export default {
       this.loadMore(column.name)
     },
     clearUnread: function(name) {
+      console.log(name)
+      console.log(this[''.concat(name, 'List')])
       this[''.concat(name, 'List')] = this[''.concat(name, 'List')].map(
         item => {
           item.read = 1
+          return item
         }
       )
+      console.log(this[''.concat(name, 'List')])
     },
     handleClear: function(column) {
       this.clearUnread(column.name)

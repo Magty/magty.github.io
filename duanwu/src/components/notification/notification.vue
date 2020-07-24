@@ -3,8 +3,8 @@
     <Dropdown
       trigger="custom"
       :visible="visible"
-      :transfer="transfer"
       :placement="placement"
+      :transfer="transfer"
       transfer-class-name="ivu-notifications-transfer"
       @on-visible-change="handleVisibleChange"
       @on-clickoutside="handleClickOutside"
@@ -57,11 +57,18 @@ export default {
       type: String,
       default: 'md-notifications-outline'
     },
+    /* transfer: {
+      type: Boolean,
+      default: () => {
+        return (
+          !(!this.$IVIEWPRO || this.$IVIEWPRO.transfer === '') &&
+          this.$IVIEWPRO.transfer
+        )
+      }
+    }, */
     transfer: {
       type: Boolean,
-      default: () =>
-        !(!this.$IVIEWPRO || this.$IVIEWPRO.transfer === '') &&
-        this.$IVIEWPRO.transfer
+      default: false
     },
     placement: {
       validator: value =>
@@ -139,6 +146,7 @@ export default {
         this,
         'NotificationTab'
       )
+      console.log('===length:' + AllNotificationTabs.length)
       let count = 0
       AllNotificationTabs.forEach(item => {
         if (item.count) {
@@ -211,11 +219,11 @@ export default {
         padding: 0 4px;
       }
     }
+    .ivu-tabs-tab:last-child {
+      margin-right: 0;
+    }
     .ivu-tabs-bar {
       margin-bottom: 0;
-      &:last-child {
-        margin-right: 0;
-      }
     }
   }
   &-extra {
@@ -262,6 +270,55 @@ export default {
     &-loading-more {
       cursor: pointer;
       color: #2d8cf0;
+      &:hover {
+        color: #57a3f3;
+      }
+    }
+  }
+  &-container {
+    max-height: 400px;
+    overflow: auto;
+  }
+  &-item {
+    padding: 12px 24px;
+    border-bottom: 1px solid #e8eaec;
+    cursor: pointer;
+    -webkit-transition: background-color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out;
+    text-align: left;
+    &:last-child {
+      border-bottom: none;
+    }
+    &:hover {
+      background-color: #f0faff;
+    }
+    &-unread {
+      background-color: #f8f8f9;
+    }
+    &-title {
+      margin-bottom: 4px;
+      h4 {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 22px;
+        color: #515a6e;
+      }
+    }
+    &-tag {
+      float: right;
+      margin-top: -2px;
+      .ivu-tag {
+        margin-right: 0;
+      }
+    }
+    &-desc {
+      color: #808695;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+    &-time {
+      font-size: 12px;
+      color: #808695;
     }
   }
 }
