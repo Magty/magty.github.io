@@ -24,10 +24,10 @@ export default {
   },
   methods: {
     ...mapMutations('admin/layout', ['updateMenuCollapse']),
-    handleToggleMenuSide: function() {
+    handleToggleMenuSide: function(event) {
       if (this.isMobile) {
         this.updateMenuCollapse(false)
-        this.$emit('on-toggle-drawer')
+        this.$emit('on-toggle-drawer', event)
       } else {
         this.updateMenuCollapse(!this.menuCollapse)
       }

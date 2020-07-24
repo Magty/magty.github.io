@@ -73,16 +73,6 @@
           ></i-switch>
         </span>
       </div>
-      <div class="i-layout-header-setting-item">
-        <span class="i-layout-header-setting-item-desc">固定顶栏</span>
-        <span class="i-layout-header-setting-item-action">
-          <i-switch
-            @on-change="(status)=>handleChangeSetting('headerFix',status)"
-            size="small"
-            v-model="headerFix"
-          ></i-switch>
-        </span>
-      </div>
       <div
         class="i-layout-header-setting-item"
         :class="{'i-layout-header-setting-item-disabled': !headerFix}"

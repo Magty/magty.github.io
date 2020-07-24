@@ -1,32 +1,42 @@
 <template>
   <TabPane ref="tab" class="ivu-notifications-tab" :label="currentTitle" :name="name">
     <div ref="scroll" @scroll="handleScroll" class="ivu-notifications-container">
+      <slot name="top"></slot>
       <div class="ivu-notifications-container-list">
         <slot></slot>
       </div>
-      <div v-if="!(loading || 0 !== itemCount)" class="ivu-notifications-tab-empty">
-        <img v-if="emptyImage" :src="emptyImage" class="ivu-notifications-tab-empty-img" />
-        <div class="ivu-notifications-tab-empty-text">{{emptyText}}</div>
+      <div v-if="!loading && 0 === itemCount" class="ivu-notifications-tab-empty">
+        <slot name="empty">
+          <img v-if="emptyImage" :src="emptyImage" class="ivu-notifications-tab-empty-img" />
+          <div class="ivu-notifications-tab-empty-text">{{emptyText}}</div>
+        </slot>
       </div>
       <div class="ivu-notifications-tab-loading">
         <div
           v-if="loading"
           class="ivu-notifications-tab-loading-item ivu-notifications-tab-loading-show"
         >
-          <Icon class="ivu-load-loop" type="ios-loading"></Icon>
-          {{NotificationInstance.locale.loading}}
+          <slot name="loading">
+            <Icon class="ivu-load-loop" type="ios-loading"></Icon>
+            {{NotificationInstance.locale.loading}}
+          </slot>
         </div>
         <template v-else-if="loadedAll">
           <div
             v-if="showLoadedAll && loadedAll"
             class="ivu-notifications-tab-loading-item ivu-notifications-tab-loading-all"
-          >{{NotificationInstance.locale.loadedAll}}</div>
-          <div
-            v-else
-            @click="handleLoadMore"
-            class="ivu-notifications-tab-loading-item ivu-notifications-tab-loading-more"
-          >{{NotificationInstance.locale.loadMore}}</div>
+          >
+            <slot name="loaded-all">{{NotificationInstance.locale.loadedAll}}</slot>
+          </div>
+          <template v-else></template>
         </template>
+        <div
+          v-else
+          @click="handleLoadMore"
+          class="ivu-notifications-tab-loading-item ivu-notifications-tab-loading-more"
+        >
+          <slot name="load-more">{{NotificationInstance.locale.loadMore}}</slot>
+        </div>
       </div>
     </div>
     <div
@@ -34,8 +44,10 @@
       v-if="showClear && 0 != itemCount"
       class="ivu-notifications-tab-clear"
     >
-      <Icon v-if="showClearIcon" type="md-done-all"></Icon>
-      <span>{{ NotificationInstance.locale.clear }}</span>
+      <slot name="clear">
+        <Icon v-if="showClearIcon" type="md-done-all"></Icon>
+        <span>{{ NotificationInstance.locale.clear + title }}</span>
+      </slot>
     </div>
   </TabPane>
 </template>
@@ -45,7 +57,7 @@ import { findComponentsDownward } from '../../utils/assist'
 export default {
   name: 'NotificationTab',
   inject: ['NotificationInstance'],
-  provide: () => {
+  provide() {
     return {
       NotificationTabInstance: this
     }
@@ -96,7 +108,7 @@ export default {
   },
   data() {
     return {
-      customLabel: () => {
+      customLabel: h => {
         return (
           <div>
             <span>{this.title}</span>
@@ -111,16 +123,19 @@ export default {
     currentTitle: function() {
       const type = this.NotificationInstance.countType
       if (type === 'text') {
-        const countStr = this.count ? '(' + String(this.count) + ')' : ''
-        return String(this.title) + ' ' + countStr
+        const countStr = this.count ? '(' + this.count + ')' : ''
+        return this.title + ' ' + countStr
       }
-      return this.customLabel
+      if (type === 'badge') {
+        return this.customLabel
+      }
+      return ''
     }
   },
   watch: {
     count: {
       handler: function() {
-        this.NotificationInstance.handleGetCountAll()
+        // this.NotificationInstance.handleGetCountAll()
       },
       immediate: true
     }

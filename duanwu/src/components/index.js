@@ -1,5 +1,7 @@
 import Vue from 'vue'
-import NotificationCom from './notification'
+import Notification from './notification'
+import NotificationTab from './notification-tab'
+import NotificationItem from './notification-item'
 import PageHeader from './page-header'
 
 /* const Notification = {
@@ -9,7 +11,9 @@ import PageHeader from './page-header'
 } */
 
 const customComs = {
-  Notification: NotificationCom,
+  Notification,
+  NotificationItem,
+  NotificationTab,
   PageHeader
 }
 

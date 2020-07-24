@@ -9,7 +9,7 @@
       @on-load-more="handleLoadMore"
       @on-clear="handleClear"
     >
-      <Icon slot="icon" type="md-notifications-outline"></Icon>
+      <Icon slot="icon" type="md-notifications-outline" custom="i-icon i-icon-notification"></Icon>
       <NotificationTab
         title="通知"
         name="message"
@@ -38,7 +38,7 @@
       >
         <NotificationItem
           v-for="(item,index) in followList"
-          :key="index"
+          :key="`foll_${index}`"
           :avatar="item.avatar"
           :title="item.title"
           :time="item.time"
@@ -55,7 +55,7 @@
       >
         <NotificationItem
           v-for="(item,index) in todoList"
-          :key="index"
+          :key="`todo_${index}`"
           :content="item.content"
           :title="item.title"
           :tag="item.tag"
@@ -242,9 +242,11 @@ export default {
       this.loadMore(column.name)
     },
     clearUnread: function(name) {
-      this[''.concat(name, 'List')].map(item => {
-        item.read = 1
-      })
+      this[''.concat(name, 'List')] = this[''.concat(name, 'List')].map(
+        item => {
+          item.read = 1
+        }
+      )
     },
     handleClear: function(column) {
       this.clearUnread(column.name)

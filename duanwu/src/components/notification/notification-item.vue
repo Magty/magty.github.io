@@ -1,9 +1,14 @@
 <template>
   <div @click="handleClick" class="ivu-notifications-item" :class="classes">
-    <Row>
-      <i-Col class="ivu-notifications-item-icon" :span="4">
-        <Avatar v-if="icon" :style="iconStyle" :icon="icon" :shape="avatarShape" :size="size"></Avatar>
-        <Avatar v-else-if="customIcon" :style="iconStyle" :custom-icon="customIcon"></Avatar>
+    <Row v-bind="rowProps">
+      <i-Col class="ivu-notifications-item-icon" span="4">
+        <Avatar v-if="icon" :style="iconStyle" :icon="icon" :shape="avatarShape" :size="iconSize"></Avatar>
+        <Avatar
+          v-else-if="customIcon"
+          :style="iconStyle"
+          :custom-icon="customIcon"
+          :size="iconSize"
+        ></Avatar>
         <Avatar
           v-else-if="avatar"
           :style="iconStyle"
@@ -13,15 +18,15 @@
         ></Avatar>
       </i-Col>
       <i-Col class="ivu-notifications-item-content" :span="contentSpan">
-        <div class="ivu-notifications-item-title">{{ title || $slots.title}}</div>
+        <div class="ivu-notifications-item-title">
+          <h4 v-if="title">{{title}}</h4>
+        </div>
         <div v-if="tag" class="ivu-notifications-item-tag">
-          <Tag></Tag>
+          <Tag v-bind="tagProps">{{tag}}</Tag>
         </div>
-        <div v-if="content || $slots.content" class="ivu-notifications-item-desc">
-          <content>{{ content }}</content>
-        </div>
-        <div v-if="time || $slots.time" class="ivu-notifications-item-time">
-          <Time :time="time"></Time>
+        <div v-if="content" class="ivu-notifications-item-desc">{{content}}</div>
+        <div v-if="time" class="ivu-notifications-item-time">
+          <Time :time="time" v-bind="timeProps"></Time>
         </div>
       </i-Col>
     </Row>
@@ -58,18 +63,14 @@ export default {
       type: String
     },
     iconSize: {
-      validator: function(value) {
-        return oneOf(value, ['small', 'default', 'large'])
-      },
+      validator: value => oneOf(value, ['small', 'default', 'large']),
       default: 'default'
     },
     avatar: {
       type: String
     },
     avatarShape: {
-      validator: function(value) {
-        return oneOf(value, ['circle', 'square'])
-      },
+      validator: value => oneOf(value, ['circle', 'square']),
       default: 'circle'
     },
     title: {
@@ -83,14 +84,18 @@ export default {
     },
     timeProps: {
       type: Object,
-      default: () => {}
+      default: () => {
+        return {}
+      }
     },
     tag: {
       type: String
     },
     tagProps: {
       type: Object,
-      default: () => {}
+      default: () => {
+        return {}
+      }
     },
     clickClose: {
       type: Boolean,

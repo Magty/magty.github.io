@@ -19,8 +19,8 @@
           <header-logo v-if="isMobile && showMobileLogo"></header-logo>
           <header-logo v-if="!isMobile && isHeaderStick && headerFix"></header-logo>
           <header-collapse
-            v-if="!((!isMobile && !showSiderCollapse) || hideSider)"
-            @on-toggle-draw="handleToggleDrawer"
+            v-if="!(!isMobile && !showSiderCollapse || hideSider)"
+            @on-toggle-drawer="handleToggleDrawer"
           ></header-collapse>
           <header-reload v-if="!isMobile && showReload" @on-reload="handleReload"></header-reload>
           <menu-head ref="menuHead" v-if="headerMenu && !isMobile"></menu-head>
@@ -45,7 +45,7 @@
       </transition>
       <Content class="i-layout-content" :class="contentClasses">
         <transition name="fade-quick">
-          <i-tabs v-if="tabs"></i-tabs>
+          <i-tabs v-if="tabs" v-show="showHeader"></i-tabs>
         </transition>
         <div class="i-layout-content-main">
           <keep-alive :include="keepAlive">
@@ -55,7 +55,7 @@
       </Content>
       <copyright></copyright>
     </Layout>
-    <div>
+    <div v-if="isMobile && !hideSider">
       <Drawer placement="left" :closable="false" :class-name="drawerClasses" v-model="showDrawer">
         <menu-side></menu-side>
       </Drawer>
@@ -141,7 +141,7 @@ export default {
     ...mapState('admin/page', ['keepAlive']),
     ...mapGetters('admin/menu', ['hideSider']),
     isHeaderStick: function() {
-      return this.hideSider ? true : this.hideSider
+      return this.hideSider ? true : this.headerStick
     },
     showHeader: function() {
       let flag = true
@@ -487,6 +487,10 @@ export default {
     }
   }
   &-drawer {
+    .ivu-drawer-body {
+      padding: 0;
+      overflow: visible;
+    }
     .i-layout-menu-side {
       height: calc(100vh - 64px);
       overflow-y: auto;

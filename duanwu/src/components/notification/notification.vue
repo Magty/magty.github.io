@@ -9,17 +9,23 @@
       @on-visible-change="handleVisibleChange"
       @on-clickoutside="handleClickOutside"
     >
-      <div @click.prevent="handleToggleOpen" class="ivu-notifications-rel">
-        <Badge :count="finalCount">
-          <Icon :type="icon" size="24"></Icon>
+      <div @click.prevent.stop="handleToggleOpen" class="ivu-notifications-rel">
+        <Badge :count="finalCount" v-bind="badgeProps">
+          <slot name="icon">
+            <Icon :type="icon" size="24"></Icon>
+          </slot>
         </Badge>
       </div>
       <DropdownMenu slot="list">
         <div class="ivu-notifications-list" :class="{'ivu-notifications-list-wide':wide}">
           <div class="ivu-notifications-tabs">
-            <Tabs @on-click="handleTabChange" :animated="false" :value="tab"></Tabs>
+            <Tabs @on-click="handleTabChange" :animated="false" :value="tab">
+              <slot></slot>
+            </Tabs>
           </div>
-          <div v-if="$slots.extra" class="ivu-notifications-extra"></div>
+        </div>
+        <div class="ivu-notifications-extra">
+          <slot name="extra"></slot>
         </div>
       </DropdownMenu>
     </Dropdown>
@@ -30,7 +36,7 @@
 import { oneOf, findComponentsDownward } from '../../utils/assist'
 export default {
   name: 'Notification',
-  provide: function() {
+  provide() {
     return {
       NotificationInstance: this
     }
@@ -44,9 +50,7 @@ export default {
       default: false
     },
     countType: {
-      validator(value) {
-        return oneOf(value, ['text', 'badge'])
-      },
+      validator: value => oneOf(value, ['text', 'badge']),
       default: 'text'
     },
     icon: {
@@ -55,11 +59,13 @@ export default {
     },
     transfer: {
       type: Boolean,
-      default: false
+      default: () =>
+        !(!this.$IVIEWPRO || this.$IVIEWPRO.transfer === '') &&
+        this.$IVIEWPRO.transfer
     },
     placement: {
-      validator(value) {
-        return oneOf(value, [
+      validator: value =>
+        oneOf(value, [
           'top',
           'top-start',
           'top-end',
@@ -72,8 +78,7 @@ export default {
           'right',
           'right-start',
           'right-end'
-        ])
-      },
+        ]),
       default: 'bottom'
     },
     badgeProps: {
@@ -141,7 +146,6 @@ export default {
         }
       })
       this.countAll = count
-      return count
     },
     handleItemClick: function(e, t) {
       this.$emit('on-item-click', e, t)
@@ -154,7 +158,7 @@ export default {
       this.$emit('on-load-more', e)
     },
     handleClose: function() {
-      this.visible = !1
+      this.visible = false
     },
     handleTabChange: function(name) {
       const AllNotificationTabs = findComponentsDownward(
