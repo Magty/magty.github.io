@@ -146,7 +146,6 @@ export default {
         this,
         'NotificationTab'
       )
-      console.log('===length:' + AllNotificationTabs.length)
       let count = 0
       AllNotificationTabs.forEach(item => {
         if (item.count) {

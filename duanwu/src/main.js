@@ -4,9 +4,9 @@ import VueI18n from 'vue-i18n'
 import ViewUI from 'view-design'
 
 import messages from '@/lang'
-
 import 'view-design/dist/styles/iview.css'
 import '@/assets/font/iconfont.css'
+import importDirective from '@/directive'
 
 import customComponent from '_c'
 
@@ -19,6 +19,7 @@ import siderRouters from './router/config/routers'
 import headerRouters from './router/config'
 import store from './store'
 import MyPlugin from '@/plugin'
+import mixin from '@/mixins/appRouteChange.js'
 
 import {
   dynamicSiderMenu
@@ -45,11 +46,10 @@ Vue.use(customComponent)
 Vue.component('i-link', link)
 
 Vue.config.productionTip = false
+importDirective(Vue)
 
-function appRouteChange(newRoute, oldRoute) {
-
-}
 new Vue({
+  mixins: [mixin],
   router,
   store,
   i18n,
@@ -75,7 +75,7 @@ new Vue({
           this.$store.commit('admin/menu/setOpenNames', openNames)
         }
       }
-      appRouteChange(newRoute, oldRoute)
+      this.appRouteChange(newRoute, oldRoute)
     }
   }
 }).$mount('#app')
