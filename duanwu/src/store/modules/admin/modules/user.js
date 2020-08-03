@@ -5,29 +5,50 @@ const state = {
     name: 'Magty'
   }
 }
+const mutations = {
+  setInfo: function (state, value) {
+    state.info = {
+      ...value
+    }
+  }
+}
 const actions = {
-  set: function ({
+  set: async function ({
     state,
+    commit,
     dispatch
   }, info) {
-    return new Promise((resolve, reject) => {
-      state.info = info
-      resolve()
+    commit('setInfo', info)
+    await dispatch('admin/db/set', {
+      dbName: 'sys',
+      path: 'user.info',
+      value: info,
+      user: true
+    }, {
+      root: true
     })
   },
-  load: function ({
+  load: async function ({
     state,
+    commit,
     dispatch
   }) {
-    return new Promise(() => {
-      dispatch('admin/page/openedLoad', null, {
-        root: true
-      })
+    const info = await dispatch('admin/db/get', {
+      dbName: 'sys',
+      path: 'user.info',
+      defaultValue: {},
+      user: true
+    }, {
+      root: true
     })
+    // console.log('info' + info)
+    commit('setInfo', info)
+    return info
   }
 }
 export default {
   namespaced: true,
   state,
+  mutations,
   actions
 }

@@ -11,10 +11,11 @@ import importDirective from '@/directive'
 import customComponent from '_c'
 
 import link from '_c/i-link'
+import iFrame from '_c/i-frame'
 
 import App from './App.vue'
 import router from './router'
-import routers from './router/routers'
+import routers from './router/route-table'
 import siderRouters from './router/config/routers'
 import headerRouters from './router/config'
 import store from './store'
@@ -31,19 +32,34 @@ import {
   getOpenNamesByPath
 } from './utils/route'
 
+// console.log(process.env.NODE_ENV)
+if (process.env.NODE_ENV !== 'production') {
+  require('./mock')
+}
+
 store.dispatch('admin/i18n/getLocale')
 const locale = store.state.admin.i18n.locale
 Vue.use(VueI18n)
-Vue.use(ViewUI)
+Vue.locale = () => {}
+Vue.config.lang = locale
 const i18n = new VueI18n({
   locale,
   /* fallbackLocale: 'en',
   silentFallbackWarn: true, */
   messages
 })
+
+window && (window.$t = (key, value) => {
+  return i18n.t(key, value)
+})
+
 Vue.use(MyPlugin)
+Vue.use(ViewUI, {
+  i18n: (key, value) => i18n.t(key, value)
+})
 Vue.use(customComponent)
 Vue.component('i-link', link)
+Vue.component('i-frame', iFrame)
 
 Vue.config.productionTip = false
 importDirective(Vue)

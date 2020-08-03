@@ -4,7 +4,7 @@ export const getUserInfo = ({
   userId
 }) => {
   return axios.request({
-    url: '/getUserInfo',
+    url: '/api/getUserInfo',
     method: 'post',
     data: {
       userId
@@ -16,8 +16,9 @@ export const login = ({
   username,
   password
 }) => {
+  // console.log(username + '===api==:' + password)
   return axios.request({
-    url: '/login',
+    url: '/api/login',
     method: 'post',
     data: {
       username,
@@ -28,7 +29,7 @@ export const login = ({
 
 export const logout = () => {
   return axios.request({
-    url: '/logout',
+    url: '/api/logout',
     method: 'post'
   })
 }
@@ -40,7 +41,7 @@ export const register = ({
   captcha
 }) => {
   return axios.request({
-    url: '/register',
+    url: '/api/register',
     method: 'post',
     data: {
       email,
@@ -53,7 +54,7 @@ export const register = ({
 
 export const authorization = () => {
   return axios.request({
-    url: '/authorization',
+    url: '/api/authorization',
     method: 'get'
   })
 }

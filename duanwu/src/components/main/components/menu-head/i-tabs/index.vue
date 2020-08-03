@@ -150,7 +150,7 @@ export default {
       }
     },
     handleClickClose: function(tagName) {
-      console.log(tagName)
+      // console.log(tagName)
       this.close({ tagName })
     },
     handleScroll: function() {
@@ -192,6 +192,8 @@ export default {
     }
   },
   mounted: function() {
+    // console.log('%c======itabs==mounted===', 'color: red')
+    // console.log(this.opened.length)
     document.addEventListener('scroll', this.handleScroll, {
       passive: true
     })

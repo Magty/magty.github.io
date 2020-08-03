@@ -1,6 +1,6 @@
 const users = [{
   username: 'admin',
-  password: 'admin',
+  password: '123123',
   uuid: 'admin-uuid',
   info: {
     name: 'Aresn',

@@ -11,6 +11,7 @@
     })
   }
 } */
+// import ViewUI from 'view-design'
 import {
   login,
   register
@@ -18,62 +19,49 @@ import {
 
 import debug from '@/utils/debug'
 
-import router from '@/router'
+// import router from '@/router'
 const {
   cookies
 } = debug
 
 const actions = {
-  login: function ({
+  login: async function ({
     dispatch
   }, {
     username,
     password
   }) {
-    return new Promise((resolve, reject) => {
-      login({
-        username,
-        password
-      }).then(
-        user => {
-          cookies.set('uuid', user.uuid)
-          cookies.set('token', user.token)
-          const allPromise = [dispatch('admin/user/set', user.info, {
-            root: true
-          }), this.load()]
-          Promise.all(allPromise).then(resolve()).catch(e => reject(e))
-        }
-      ).catch(err => {
-        reject(err)
-      })
+    const user = await login({
+      username,
+      password
     })
+    // console.log('===user:' + user)
+    cookies.set('uuid', user.uuid)
+    cookies.set('token', user.token)
+    await dispatch('load')
+    await dispatch('admin/user/set', user.info, {
+      root: true
+    })
+    return user
   },
   logout: function ({
     dispatch
+  }, {
+    confirm,
+    vm
   }) {
-    const param = (arguments.length > 1 && arguments[1]) ? arguments[1] : {}
-    const {
-      confirm,
-      vm
-    } = param
-
-    function confirmed() {
-      return changeTo.apply(this, arguments)
-    }
-
-    function changeTo() {
+    async function confirmed() {
       cookies.remove('token')
       cookies.remove('uuid')
-      dispatch('admin/user/set', {}, {
+      await dispatch('admin/user/set', {}, {
         root: true
-      }).then(
-        router.push({
-          name: 'login'
-        })
-      )
+      })
+      vm.$router.push({
+        name: 'login'
+      })
     }
     if (confirm) {
-      this.$Modal.confirm({
+      vm.$Modal.confirm({
         title: vm.$t('basicLayout.logout.confirmTitle'),
         content: vm.$t('basicLayout.logout.confirmContent'),
         onOk: function () {
@@ -84,7 +72,7 @@ const actions = {
       confirmed()
     }
   },
-  register: function ({
+  register: async function ({
     dispatch
   }, {
     mail,
@@ -92,33 +80,28 @@ const actions = {
     mobile,
     captcha
   }) {
-    return new Promise((resolve, reject) => {
-      register({
-        mail,
-        password,
-        mobile,
-        captcha
-      }).then(user => {
-        cookies.set('uuid', user.uuid)
-        cookies.set('token', user.token)
-        const allPromise = [dispatch('admin/user/set', user.info, {
-          root: true
-        }), this.load()]
-        Promise.all(allPromise).then().catch(e => reject(e))
-      }).catch(err => reject(err))
+    const user = await register({
+      mail,
+      password,
+      mobile,
+      captcha
+    })
+    cookies.set('uuid', user.uuid)
+    cookies.set('token', user.token)
+    await dispatch('load')
+    await dispatch('admin/user/set', user.info, {
+      root: true
     })
   },
-  load: function ({
+  load: async function ({
     state,
     dispatch
   }) {
-    return new Promise((resolve, reject) => {
-      const allPromise = [dispatch('admin/user/load', null, {
-        root: true
-      }), dispatch('admin/page/openedLoad', null, {
-        root: true
-      })]
-      Promise.all(allPromise).then(() => resolve()).catch(err => reject(err))
+    await dispatch('admin/user/load', null, {
+      root: true
+    })
+    await dispatch('admin/page/openedLoad', null, {
+      root: true
     })
   }
 }

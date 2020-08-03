@@ -354,10 +354,9 @@ export const setTitle = (routeItem, vm) => {
   window.document.title = resTitle
 }
 
-function translateTitle() {
-  if (arguments && arguments.length > 0) {
-    const ti = arguments[0]
-    return (window && window.$t && ti.indexOf('$t:')) ? window.$t(ti.split('$t:')[1]) : ti
+function translateTitle(title) {
+  if (title) {
+    return (window && window.$t && title.indexOf('$t:') === 0) ? window.$t(title.split('$t:')[1]) : title
   }
 }
 

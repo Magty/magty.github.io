@@ -11,8 +11,13 @@
       <div class="ivu-login">
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" autocomplete="off">
           <div class="ivu-login-username">
-            <FormItem prop="user">
-              <i-Input size="large" type="text" v-model="formValidate.user" placeholder="请输入用户名">
+            <FormItem prop="username">
+              <i-Input
+                size="large"
+                type="text"
+                v-model="formValidate.username"
+                placeholder="请输入用户名"
+              >
                 <Icon type="ios-person-outline" slot="prepend"></Icon>
               </i-Input>
             </FormItem>
@@ -49,17 +54,23 @@
         <router-link class="page-account-register" to="/register">注册账户</router-link>
       </div>
     </div>
+    <copyright></copyright>
   </div>
 </template>
 
 <script>
+import copyright from '_c/copyright'
 import { mapActions } from 'vuex'
 import { homeName } from '@/config/settings'
 
 export default {
   name: 'loginPage',
+  components: {
+    copyright
+  },
   data() {
     return {
+      autoLogin: true,
       otherLogin: [
         {
           name: 'wechat',
@@ -75,8 +86,8 @@ export default {
         }
       ],
       formValidate: {
-        user: '',
-        password: ''
+        username: 'admin',
+        password: '123123'
       },
       ruleValidate: {
         user: [
@@ -103,11 +114,35 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['login']),
-    handleSubmit(name) {
-      this.$router.push({
+    ...mapActions('admin/account', ['login']),
+    async handleSubmit(name) {
+      /* this.$router.push({
         name: homeName
+      }) */
+      try {
+        await this.login({
+          username: this.formValidate.username,
+          password: this.formValidate.password
+        })
+        if (this.$route.query.redirect) {
+          this.$router.replace({ path: this.$route.query.redirect })
+        } else {
+          this.$router.push({ name: homeName, replace: true })
+        }
+      } catch (err) {
+        console.log(err)
+        this.$Message.error('登录失败！')
+      }
+      /* this.login({
+        username: this.formValidate.username,
+        password: this.formValidate.password
       })
+        .then(() => {
+          this.$router.replace(this.$route.query.redirect || '/')
+        })
+        .catch(() => {
+          this.$Message.error('登录失败！')
+        }) */
       /* this.$refs[name].validate(valid => {
         if (valid) {
           // this.$Message.success('Success!')

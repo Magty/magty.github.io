@@ -23,7 +23,9 @@ const {
 
 Vue.use(VueRouter)
 
-const LOGIN_PAGE_NAME = 'dashboard-console'
+// const LOGIN_PAGE_NAME = 'dashboard-console'
+const LOGIN_PAGE_NAME = 'login'
+// console.log(routes)
 const router = new VueRouter({
   routes,
   mode: routerMode,
@@ -34,17 +36,20 @@ router.beforeEach((to, from, next) => {
   if (showProgressBar) {
     iView.LoadingBar.start()
   }
+  // console.log('==to:' + to.name)
   if (to.matched.some(item => item.meta.auth)) {
     const token = cookies.get('token')
+    // console.log(token)
     if (!token && to.name !== LOGIN_PAGE_NAME) {
-      /* next({
+      next({
         name: LOGIN_PAGE_NAME,
         query: {
           redirect: to.fullPath
         }
-      }) */
+      })
       next()
     } else if (!token && to.name === LOGIN_PAGE_NAME) {
+      console.log(222)
       next()
     } else if (token && to.name === LOGIN_PAGE_NAME) {
       next({
@@ -53,13 +58,14 @@ router.beforeEach((to, from, next) => {
     } else {
       next()
     }
+  } else {
+    next()
   }
 })
 
 router.afterEach(to => {
   if (showProgressBar) {
     iView.LoadingBar.finish()
-    console.log(to)
     store.dispatch('admin/page/open', to)
     setTitles({
       title: to.meta.title

@@ -1,10 +1,9 @@
 <template>
   <span class="i-layout-header-trigger i-layout-header-trigger-min">
     <Dropdown
-      @click="handleClick"
+      @on-click="handleClick"
       :trigger="isMobile? 'click' : 'hover'"
-      class="i-layout-header-user"
-      :class="{'i-layout-header-user-mobile':isMobile}"
+      :class="['i-layout-header-user',{'i-layout-header-user-mobile':isMobile}]"
     >
       <Avatar v-if="info.avatar" size="small" :src="info.avatar"></Avatar>
       <span v-if="!isMobile" class="i-layout-header-user-name">{{ info.name }}</span>
@@ -21,12 +20,10 @@
             <span>{{ $t('basicLayout.user.setting') }}</span>
           </DropdownItem>
         </i-link>
-        <i-link to="/setting/account">
-          <DropdownItem divided name="logout">
-            <Icon type="ios-log-out"></Icon>
-            <span>{{ $t('basicLayout.user.logOut') }}</span>
-          </DropdownItem>
-        </i-link>
+        <DropdownItem divided name="logout">
+          <Icon type="ios-log-out"></Icon>
+          <span>{{ $t('basicLayout.user.logOut') }}</span>
+        </DropdownItem>
       </DropdownMenu>
     </Dropdown>
   </span>
@@ -43,11 +40,12 @@ export default {
   methods: {
     ...mapActions('admin/account', ['logout']),
     handleClick: function(opName) {
-      opName === 'logout' &&
+      if (opName === 'logout') {
         this.logout({
           confirm: this.logoutConfirm,
           vm: this
         })
+      }
     }
   }
 }

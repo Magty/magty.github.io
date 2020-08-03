@@ -1,6 +1,7 @@
 import Main from '_c/main'
 import dashboardRouters from './dashboardRouters'
 import settingRouters from './settingRouters'
+// import userRouters from './userRouters'
 export default [{
     path: '/',
     name: 'home',

@@ -8,13 +8,13 @@ module.exports = {
   errorLog: 'production',
 
   titleSuffix: 'duanwu',
-  routerMode: 'hash',
+  routerMode: 'history',
   routerBase: '/',
   showProgressBar: true,
   apiBaseURL: '/',
   modalDuration: 3,
   errorModalType: 'Message',
-  cookiesExpires: '1',
+  cookiesExpires: 1,
   i18n: {
     default: 'zh-CN',
     auto: false

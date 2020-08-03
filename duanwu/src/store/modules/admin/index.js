@@ -5,6 +5,7 @@ import log from './modules/log'
 import layout from './modules/layout'
 import i18n from './modules/i18n'
 import account from './modules/account'
+import db from './modules/db'
 export default {
   namespaced: true,
   modules: {
@@ -14,6 +15,7 @@ export default {
     log,
     layout,
     i18n,
+    db,
     account
   }
 }

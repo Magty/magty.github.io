@@ -125,6 +125,19 @@ body {
 }
 .ivu-menu-dark {
   background: #191a23;
+  &.ivu-menu-vertical {
+    .ivu-menu-opened {
+      background: #101117;
+      .ivu-menu-submenu-title {
+        background: #191a23;
+      }
+    }
+    .ivu-menu-item:hover,
+    .ivu-menu-submenu-title:hover {
+      color: #fff;
+      background: #191a23;
+    }
+  }
 }
 .ivu-block {
   display: block;

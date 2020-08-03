@@ -26,6 +26,12 @@ function recordError(error) {
       content: error.message,
       duration: modalDuration
     })
+  } else if (errorModalType === 'Notice') {
+    this.$Notice.error({
+      title: '提示',
+      desc: error.message,
+      duration: modalDuration
+    })
   }
 }
 
@@ -67,14 +73,15 @@ class HttpRequest {
         // Spin.show() // 不建议开启，因为界面不友好
       }
       this.queue[url] = true
-      config.headers.Authorization = getToken()
-      // config.headers['X-Token'] = getToKen()
+      // config.headers.Authorization = getToken()
+      config.headers['X-Token'] = getToken()
       return config
     }, error => {
       return Promise.reject(error)
     })
     // 响应拦截
     instance.interceptors.response.use(res => {
+      // console.log('====res:' + res)
       this.destory(url)
       const {
         data
@@ -84,7 +91,7 @@ class HttpRequest {
       } = data
       switch (code) {
         case 0:
-          return data
+          return data.data
         case 'xxx':
           createError('[ code: xxx ] '.concat(data.msg, ': ').concat(res.config.url))
           break

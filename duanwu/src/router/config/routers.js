@@ -163,6 +163,16 @@ export const tool = {
   header: 'home',
   custom: 'iconfont icon-tool',
   children: [{
+    path: ''.concat(preFixTool, 'frame'),
+    title: '内嵌页面',
+    children: [{
+      path: ''.concat(preFixTool, 'frame/iview'),
+      title: 'View UI 官网'
+    }, {
+      path: ''.concat(preFixTool, 'frame/iqiyi'),
+      title: '爱奇艺'
+    }]
+  }, {
     path: ''.concat(preFixTool, 'page-cache'),
     title: '页面缓存',
     children: [{
@@ -212,5 +222,5 @@ export const i18n = {
 }
 
 export default [
-  dashboard, form, list, search, profile, result, exception, setting, editor, tool, i18n
+  dashboard, form, list, search, profile, result, exception, setting, editor, tool, i18n, log
 ]

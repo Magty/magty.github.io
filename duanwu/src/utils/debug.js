@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie'
-// import lowdb from 'lowdb'
+import lowdb from 'lowdb'
 
 import {
   cookiesExpires,
@@ -7,25 +7,20 @@ import {
 } from '@/config/settings'
 
 const cookies = {
-  set: function () {
-    const name = (arguments.length > 0 && arguments[0]) ? arguments[0] : 'default'
-    const cook = (arguments.length > 1 && arguments[1]) ? arguments[1] : ''
-    const config = (arguments.length > 2 && arguments[2]) ? arguments[2] : {}
+  set: function (name = 'default', cook = '', config = {}) {
     const baseCfg = {
       expires: cookiesExpires
     }
     Object.assign(baseCfg, config)
     Cookies.set('admin-'.concat(name), cook, baseCfg)
   },
-  get: function () {
-    const name = (arguments.length > 0 & arguments[0]) ? arguments[0] : 'default'
+  get: function (name = 'default') {
     return Cookies.get('admin-'.concat(name))
   },
   getAll: function () {
     return Cookies.get()
   },
-  remove: function () {
-    const name = (arguments.length > 0 & arguments[0]) ? arguments[0] : 'default'
+  remove: function (name = 'default') {
     return Cookies.remove('admin-'.concat(name))
   }
 }
@@ -117,13 +112,13 @@ const log = {
     }])
   }
 }
-/* const FileSync = require('lowdb/adapters/FileSync')
-const adapter = new FileSync('db.json')
+const FileSync = require('lowdb/adapters/LocalStorage')
+const adapter = new FileSync('magty')
 const db = lowdb(adapter)
-db.default({
+db.defaults({
   sys: {},
   database: {}
-}).write() */
+}).write()
 
 function i18nTitle(title) {
   return window && window.$t && title.indexOf('$t:') === 0 ? window.$t(title.split('$t:')[1]) : title
@@ -140,6 +135,6 @@ const title = function ({
 export default {
   cookies,
   log,
-  // db,
+  db,
   title
 }
