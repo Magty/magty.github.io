@@ -1,11 +1,8 @@
-<template>
-  <div></div>
-</template>
-
 <script>
+import loginMixin from '../mixins/loginMixin'
 export default {
   name: 'Password',
-  mixins: [i.default],
+  mixins: [loginMixin],
   data() {
     return {
       className: 'ivu-login-password',

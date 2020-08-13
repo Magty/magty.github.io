@@ -10,7 +10,7 @@ export default {
     const access = store.admin.user.info.access
     if (value && value instanceof Array && value.length && access) {
       const isAccess = isInArray(value, access)
-      if (isAccess || el.parentNode) {
+      if (isAccess && el.parentNode) {
         el.parentNode.removeChild(el)
       }
     }

@@ -1,12 +1,9 @@
-<template>
-  <div></div>
-</template>
-
 <script>
+import loginMixin from '../mixins/loginMixin'
 export default {
   name: 'UserName',
-  mixins: [],
-  data: function() {
+  mixins: [loginMixin],
+  data() {
     return {
       className: 'ivu-login-username',
       prefix: 'ios-contact-outline',

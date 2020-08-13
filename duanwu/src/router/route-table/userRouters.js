@@ -4,7 +4,7 @@ export default [{
     meta: {
       title: '$t:page.login.title'
     },
-    component: () => import('@/views/login/login')
+    component: () => import('@/views/login')
   },
   {
     path: '/register',
@@ -12,7 +12,7 @@ export default [{
     meta: {
       title: '$t:page.register.title'
     },
-    component: () => import('@/views/register/register')
+    component: () => import('@/views/register')
   },
   {
     path: '/register/result',

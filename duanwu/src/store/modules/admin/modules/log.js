@@ -1,3 +1,6 @@
+import dayjs from 'dayjs'
+import debug from '@/utils/debug'
+import lodash from 'lodash'
 const state = {
   log: []
 }
@@ -32,11 +35,11 @@ const actions = {
       meta: {
         ...meta,
         user: rootState.user.info,
-        uuid: '',
-        token: '',
-        url: ''
+        uuid: debug.cookies.get('uuid'),
+        token: debug.cookies.get('token'),
+        url: lodash.get(window, 'location.href', '')
       },
-      time: new Date().format('YYYY-MM-DD HH:mm:ss')
+      time: dayjs().format('YYYY-MM-DD HH:mm:ss')
     })
   }
 }

@@ -6,7 +6,7 @@ export default {
       push: function (message) {
         typeof message === 'string' ? store.dispatch('admin/log/push', {
           message
-        }) : typeof message === 'object' && store.dispatch('admin/log/push', message)
+        }) : Symbol(message) === 'object' && store.dispatch('admin/log/push', message)
       }
     })
   }

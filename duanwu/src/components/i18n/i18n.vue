@@ -37,9 +37,9 @@ export default {
   },
   methods: {
     ...mapActions('admin/i18n', ['setLocale']),
-    handleClick: function(lang) {
-      if (lang !== this.locale) {
-        this.setLocale({ lang, vm: this })
+    handleClick: function(locale) {
+      if (locale !== this.locale) {
+        this.setLocale({ locale, vm: this })
       }
     }
   }

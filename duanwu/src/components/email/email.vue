@@ -1,11 +1,9 @@
-<template>
-  <div></div>
-</template>
-
 <script>
+import loginMixin from '../mixins/loginMixin'
+import message from '../../config/message'
 export default {
   name: 'Email',
-  mixins: [],
+  mixins: [loginMixin],
   data() {
     return {
       className: 'ivu-login-mail',
@@ -20,8 +18,8 @@ export default {
       default: function() {
         return [
           {
-            require: true,
-            message: '',
+            required: true,
+            message: message.Email,
             trigger: 'change'
           },
           {

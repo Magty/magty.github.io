@@ -1,10 +1,23 @@
+import Captcha from './captcha'
+import Email from './email'
+import Login from './login'
+import Mobile from './mobile'
 import Notification from './notification'
 import NotificationTab from './notification-tab'
 import NotificationItem from './notification-item'
 import PageHeader from './page-header'
+import Password from './password'
+import Result from './result'
+import Submit from './submit'
+import UserName from './user-name'
+
 import Copy from './base/copy'
 
 import locale from '../local/index'
+
+import resize from '../directive/resize'
+import styles from '../directive/styles'
+import lineClamp from '../directive/line-clamp'
 
 /* const Notification = {
   install: function (Vue) {
@@ -13,14 +26,31 @@ import locale from '../local/index'
 } */
 
 const components = {
+  Captcha,
+  Email,
+  Login,
+  Mobile,
   Notification,
   NotificationItem,
   NotificationTab,
-  PageHeader
+  PageHeader,
+  Password,
+  Result,
+  Submit,
+  UserName
 }
 
 const directives = {
-
+  display: styles.display,
+  width: styles.width,
+  height: styles.height,
+  margin: styles.margin,
+  padding: styles.padding,
+  font: styles.font,
+  color: styles.color,
+  'bg-color': styles.bgColor,
+  resize,
+  'line-clamp': lineClamp
 }
 
 const filters = {

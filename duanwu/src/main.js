@@ -6,7 +6,7 @@ import ViewUI from 'view-design'
 import messages from '@/lang'
 import 'view-design/dist/styles/iview.css'
 import '@/assets/font/iconfont.css'
-import importDirective from '@/directive'
+// import importDirective from '@/directive'
 
 import customComponent from '_c'
 
@@ -62,7 +62,7 @@ Vue.component('i-link', link)
 Vue.component('i-frame', iFrame)
 
 Vue.config.productionTip = false
-importDirective(Vue)
+// importDirective(Vue)
 
 new Vue({
   mixins: [mixin],

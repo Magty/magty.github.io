@@ -7,6 +7,10 @@ const {
   db
 } = debug
 
+export function pathInit() {
+  return format
+}
+
 function format({
   dbName = 'database',
   path = '',

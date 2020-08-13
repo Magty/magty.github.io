@@ -354,14 +354,12 @@ const actions = {
         index = idx
       }
     })
-    console.log('closeRightindex:' + index)
-    if (index > 0) {
-      const cloneOpened = lodash.cloneDeep(state.opened)
-      cloneOpened.splice(index + 1).forEach(item => {
-        commit('keepAliveRemove', item.name)
-      })
-      commit('setOpened', cloneOpened)
-    }
+    // console.log('closeRightindex:' + index)
+    const cloneOpened = lodash.cloneDeep(state.opened)
+    cloneOpened.splice(index + 1).forEach(item => {
+      commit('keepAliveRemove', item.name)
+    })
+    commit('setOpened', cloneOpened)
     state.current = current
     if (router.app.$route.fullPath !== current) {
       router.push(current)

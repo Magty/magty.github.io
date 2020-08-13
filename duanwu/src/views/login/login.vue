@@ -38,7 +38,7 @@
           <div class="page-account-auto-login">
             <FormItem>
               <Checkbox label="自动登录">自动登录</Checkbox>
-              <router-link to="/">忘记密码</router-link>
+              <router-link to>忘记密码</router-link>
             </FormItem>
           </div>
           <div class="ivu-login-submit">
@@ -51,7 +51,7 @@
       <div class="page-account-other">
         <span>其它登录方式</span>
         <img v-for="(item, index) in otherLogin" :key="index" :src="item.icon" :alt="item.name" />
-        <router-link class="page-account-register" to="/register">注册账户</router-link>
+        <router-link class="page-account-register" :to="{name: 'register'}">注册账户</router-link>
       </div>
     </div>
     <copyright></copyright>

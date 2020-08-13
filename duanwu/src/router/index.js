@@ -49,7 +49,6 @@ router.beforeEach((to, from, next) => {
       })
       next()
     } else if (!token && to.name === LOGIN_PAGE_NAME) {
-      console.log(222)
       next()
     } else if (token && to.name === LOGIN_PAGE_NAME) {
       next({
