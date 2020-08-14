@@ -23,7 +23,7 @@ export default [{
           title: '前端日志',
           auth: true
         },
-        component: () => import('@/views/single-page/users')
+        component: () => import('@/views/log')
       },
       /* {
         path: 'refresh',
