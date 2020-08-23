@@ -34,7 +34,7 @@ export function getHeaderByPath(path, routers) {
       header
     })
     headerRouter.forEach(item => {
-      allRoute.push(item)
+      return allRoute.push(item)
     })
   })
   const route = allRoute.find(item => item.path === path)
@@ -53,7 +53,7 @@ export function getRouteByHeader(route) {
  *
  * @param {当前路由} route
  * @param {能打开的name} openNames
- * @returns 返回添加opennames之后的route
+ * @return 返回添加opennames之后的route
  */
 export function openNamesRoute(route, openNames) {
   if (route.children && route.children.length) {
@@ -63,7 +63,7 @@ export function openNamesRoute(route, openNames) {
         path: item.path,
         openNames: newOpenNames
       })
-      const child = openNamesRoute(item, openNames)
+      const child = openNamesRoute(item, newOpenNames)
       return total.concat(child)
     }, [])
   }
@@ -91,7 +91,7 @@ export function getOpenNamesByPath(path, routers) {
 /**
  *
  * @param {根路由} route
- * @returns 数组化路由
+ * @return 数组化路由
  */
 export function arrayRoute(route) {
   if (route.children && route.children.length) {

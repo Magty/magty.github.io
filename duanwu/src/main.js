@@ -78,10 +78,14 @@ new Vue({
   },
   watch: {
     $route: function (newRoute, oldRoute) {
-      const path = newRoute.matched[newRoute.matched.length - 1].path
+      let path = newRoute.matched[newRoute.matched.length - 1].path
       if (!dynamicSiderMenu) {
-        const header = getHeaderByPath(path, siderRouters)
-        if (header && path === newRoute.path) {
+        let header = getHeaderByPath(path, siderRouters)
+        if (header === null) {
+          path = newRoute.path
+          header = getHeaderByPath(path, siderRouters)
+        }
+        if (header) {
           this.$store.commit('admin/menu/setHeaderName', header)
           this.$store.commit('admin/menu/setMenuSider', siderRouters)
           const route = getRouteByHeader(siderRouters, header)

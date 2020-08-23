@@ -228,6 +228,9 @@ const actions = {
     temp.query = query || temp.query
     temp.fullPath = fullPath || temp.fullPath
     commit('addOpened', temp)
+    if (getCache(temp)) {
+      commit('keepAlivePush', tag.name)
+    }
     await dispatch('opened2db')
   },
   open: async function ({

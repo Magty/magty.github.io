@@ -59,7 +59,7 @@
           <i-switch
             @on-change="(status)=>handleChangeSetting('siderFix',status)"
             size="small"
-            v-model="siderFix"
+            :value="siderFix"
           ></i-switch>
         </span>
       </div>
@@ -69,7 +69,7 @@
           <i-switch
             @on-change="(status)=>handleChangeSetting('headerFix',status)"
             size="small"
-            v-model="headerFix"
+            :value="headerFix"
           ></i-switch>
         </span>
       </div>
@@ -88,7 +88,7 @@
             @on-change="(status)=>handleChangeSetting('headerHide',status)"
             size="small"
             :disabled="!headerFix"
-            v-model="headerHide"
+            :value="headerHide"
           ></i-switch>
         </span>
       </div>
@@ -107,7 +107,7 @@
             @on-change="(status)=>handleChangeSetting('headerStick',status)"
             size="small"
             :disabled="!headerFix"
-            v-model="headerStick"
+            :value="headerStick"
           ></i-switch>
         </span>
       </div>
@@ -117,7 +117,7 @@
           <i-switch
             @on-change="(status)=>handleChangeSetting('menuAccordion',status)"
             size="small"
-            v-model="menuAccordion"
+            :value="menuAccordion"
           ></i-switch>
         </span>
       </div>
@@ -127,7 +127,7 @@
           <i-switch
             @on-change="(status)=>handleChangeSetting('showSiderCollapse',status)"
             size="small"
-            v-model="showSiderCollapse"
+            :value="showSiderCollapse"
           ></i-switch>
         </span>
       </div>
@@ -137,7 +137,7 @@
           <i-switch
             @on-change="(status)=>handleChangeSetting('showCollapseMenuTitle',status)"
             size="small"
-            v-model="showCollapseMenuTitle"
+            :value="showCollapseMenuTitle"
           ></i-switch>
         </span>
       </div>
@@ -152,7 +152,7 @@
           <i-switch
             @on-change="(status)=>handleChangeSetting('showBreadcrumb',status)"
             size="small"
-            v-model="showBreadcrumb"
+            :value="showBreadcrumb"
           ></i-switch>
         </span>
       </div>
@@ -171,7 +171,7 @@
             @on-change="(status)=>handleChangeSetting('showBreadcrumbIcon',status)"
             size="small"
             :disabled="!showBreadcrumb"
-            v-model="showBreadcrumbIcon"
+            :value="showBreadcrumbIcon"
           ></i-switch>
         </span>
       </div>
@@ -181,7 +181,7 @@
           <i-switch
             @on-change="(status)=>handleChangeSetting('showReload',status)"
             size="small"
-            v-model="showReload"
+            :value="showReload"
           ></i-switch>
         </span>
       </div>
@@ -191,7 +191,7 @@
           <i-switch
             @on-change="(status)=>handleChangeSetting('showI18n',status)"
             size="small"
-            v-model="showI18n"
+            :value="showI18n"
           ></i-switch>
         </span>
       </div>
@@ -202,7 +202,7 @@
           <i-switch
             @on-change="(status)=>handleChangeSetting('tabs',status)"
             size="small"
-            v-model="tabs"
+            :value="tabs"
           ></i-switch>
         </span>
       </div>
@@ -220,7 +220,7 @@
           <i-switch
             @on-change="(status)=>handleChangeSetting('showTabsIcon',status)"
             size="small"
-            v-model="showTabsIcon"
+            :value="showTabsIcon"
             :disabled="!tabs"
           ></i-switch>
         </span>
@@ -239,7 +239,7 @@
           <i-switch
             @on-change="(status)=>handleChangeSetting('tabsFix',status)"
             size="small"
-            v-model="tabsFix"
+            :value="tabsFix"
             :disabled="!tabs"
           ></i-switch>
         </span>

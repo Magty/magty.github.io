@@ -21,6 +21,12 @@ const {
   cookies
 } = debug
 
+// 解决vue-router在3.0以上版本  重复点击菜单报错问题
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
 Vue.use(VueRouter)
 
 // const LOGIN_PAGE_NAME = 'dashboard-console'

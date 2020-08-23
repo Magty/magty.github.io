@@ -32,7 +32,6 @@ export default {
   },
   methods: {
     handleChange(e) {
-      console.log(22222)
       this.LoginInstance.formValidate[this.prop] = e
       this.$emit('on-change', e)
     },
@@ -68,7 +67,6 @@ export default {
         'on-enter': this.handleEnter
       }
     })
-    console.log(12222)
     const formItem = createElement('FormItem', {
       props: {
         prop: this.prop,

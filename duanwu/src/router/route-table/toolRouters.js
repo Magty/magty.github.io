@@ -19,7 +19,7 @@ export default {
         cache: true,
         title: '开启缓存'
       },
-      component: () => import('')
+      component: () => import('@/views/tool/page-cache/on')
     },
     {
       path: 'page-cache/off',
@@ -29,7 +29,7 @@ export default {
         cache: false,
         title: '关闭缓存'
       },
-      component: () => import('')
+      component: () => import('@/views/tool/page-cache/off')
     },
     {
       path: 'page-cache/params/:id',
@@ -39,7 +39,8 @@ export default {
         cache: true,
         title: '带参路由缓存'
       },
-      component: () => import('')
+      props: true,
+      component: () => import('@/views/tool/page-cache/params')
     },
     {
       path: 'log/record',
@@ -48,7 +49,7 @@ export default {
         ...auth,
         title: '日志记录'
       },
-      component: () => import('')
+      component: () => import('@/views/tool/log/record')
     },
     {
       path: 'log/error',
@@ -57,7 +58,7 @@ export default {
         ...auth,
         title: '错误捕捉'
       },
-      component: () => import('')
+      component: () => import('@/views/tool/log/error')
     },
     {
       path: 'log/ajax',
@@ -66,7 +67,7 @@ export default {
         ...auth,
         title: 'Ajax 错误'
       },
-      component: () => import('')
+      component: () => import('@/views/tool/log/ajax')
     },
     {
       path: 'log/console',
@@ -75,7 +76,7 @@ export default {
         ...auth,
         title: '控制台日志'
       },
-      component: () => import('')
+      component: () => import('@/views/tool/log/console')
     }
   ]
 }

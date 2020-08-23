@@ -21,7 +21,6 @@ const mutations = {
     state.isFullscreen = isFull
   },
   updateLayoutSetting: function (state, setting) {
-    console.log(setting)
     const {
       key,
       value

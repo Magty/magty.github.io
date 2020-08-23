@@ -1,5 +1,5 @@
 import axios from 'axios'
-// import iView from 'view-design'
+import iView from 'view-design'
 // import store from '@/store'
 // import { Spin } from 'iview'
 import stroe from '@/store'
@@ -22,12 +22,12 @@ function recordError(error) {
     }
   })
   if (errorModalType === 'Message') {
-    this.$Message.error({
+    iView.Message.error({
       content: error.message,
       duration: modalDuration
     })
   } else if (errorModalType === 'Notice') {
-    this.$Notice.error({
+    iView.Notice.error({
       title: '提示',
       desc: error.message,
       duration: modalDuration

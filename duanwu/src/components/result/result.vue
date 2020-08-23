@@ -4,16 +4,16 @@
       <Icon v-if="'success' === type" type="ios-checkmark"></Icon>
       <Icon v-else-if="'error' === type" type="ios-close"></Icon>
     </div>
-    <slot v-if="title" name="title">
-      <div class="ivu-result-title">{{title}}</div>
-    </slot>
-    <slot v-if="desc" name="desc">
-      <div v-if="desc" class="ivu-result-desc">{{desc}}</div>
-    </slot>
-    <slot v-if="extra" name="extra">
-      <div v-if="extra" class="ivu-result-extra">{{ extra }}</div>
-    </slot>
-    <div class="ivu-result-actions">
+    <div v-if="title || $slots.title" class="ivu-result-title">
+      <slot name="title">{{title}}</slot>
+    </div>
+    <div v-if="desc || $slots.desc" class="ivu-result-desc">
+      <slot name="desc">{{desc}}</slot>
+    </div>
+    <div v-if="extra || $slots.extra" class="ivu-result-extra">
+      <slot name="extra">{{ extra }}</slot>
+    </div>
+    <div v-if="$slots.actions" class="ivu-result-actions">
       <slot name="actions"></slot>
     </div>
   </div>

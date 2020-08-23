@@ -88,8 +88,8 @@ export default {
     isElmInwindow: function(elm) {
       const rect = elm.getBoundingClientRect()
       return (
-        rect.top > 0 &&
-        rect.left > 0 &&
+        rect.top >= 0 &&
+        rect.left >= 0 &&
         rect.bottom <=
           (window.innerHeight || document.documentElement.clientHeight) &&
         rect.right <=
@@ -107,10 +107,10 @@ export default {
             const selectedElms = document.getElementsByClassName(
               'ivu-menu-item ivu-menu-item-active ivu-menu-item-selected'
             )
-            if (selectedElms && this.isElmInwindow(selectedElms[0])) {
+            if (selectedElms && selectedElms.length && !this.isElmInwindow(selectedElms[0])) {
               const top = selectedElms[0].getBoundingClientRect().top
               const el = this.$refs.menu.$el
-              setTimeout(function() {
+              setTimeout(() => {
                 this.$ScrollTop(el, {
                   to: top,
                   time: 0

@@ -19,7 +19,7 @@ export default {
         ...auth,
         title: '成功页'
       },
-      component: () => import('')
+      component: () => import('@/views/result/success.vue')
     },
     {
       path: 'fail',
@@ -28,7 +28,7 @@ export default {
         ...auth,
         title: '失败页'
       },
-      component: () => import('')
+      component: () => import('@/views/result/fail')
     }
   ]
 }

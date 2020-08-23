@@ -12,6 +12,8 @@ import Submit from './submit'
 import UserName from './user-name'
 
 import Copy from './base/copy'
+import scrollTop from './base/scroll-top'
+import scrollIntoView from './base/scroll-into-view'
 
 import locale from '../local/index'
 
@@ -79,9 +81,9 @@ const install = (Vue, opts = {}) => {
     transfer: 'transfer' in opts ? opts.transfer : ''
   }
   Vue.prototype.$Copy = Copy
-  /* Vue.prototype.$ScrollIntoView = ScrollIntoView
-  Vue.prototype.$ScrollTop = ScrollTop
-  Vue.prototype.$Date = Date */
+  Vue.prototype.$ScrollIntoView = scrollIntoView
+  Vue.prototype.$ScrollTop = scrollTop
+  // Vue.prototype.$Date = Date
 }
 
 // auto install

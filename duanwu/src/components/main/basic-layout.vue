@@ -83,6 +83,8 @@ import headerSetting from './components/menu-head/header-setting'
 import headerNotice from './components/menu-head/header-notice'
 import iTabs from './components/menu-head/i-tabs'
 
+import { animationFrame } from '@/utils/debug'
+
 export default {
   name: 'BasicLayout',
   components: {
@@ -214,26 +216,58 @@ export default {
       }, 0)
     },
     $route: function(newRoute, oldRoute) {
-      newRoute.path === oldRoute.path &&
-        sameRouteForceUpdate &&
+      if (newRoute.path === oldRoute.path && sameRouteForceUpdate) {
         this.handleReload()
+      }
     }
   },
   methods: {
     ...mapMutations('admin/layout', ['updateMenuCollapse']),
+    ...mapMutations('admin/page', ['keepAlivePush', 'keepAliveRemove']),
     handleToggleDrawer: function(toggle) {
       this.showDrawer = typeof toogle === 'boolean' ? toggle : !this.showDrawer
     },
     handleScroll: function() {
       if (this.headerHide) {
-        // const scrollTop =document.body.scrollTop + document.documentElement.scrollTop
+        const scrollTop = document.body.scrollTop + document.documentElement.scrollTop
+        if (!this.ticking) {
+          this.ticking = true
+          animationFrame(() => {
+            if (this.oldScrollTop > scrollTop) {
+              this.headerVisible = true
+            } else {
+              if (scrollTop > 300 && this.headerVisible) {
+                this.headerVisible = false
+              } else if (scrollTop < 300 && !this.headerVisible) {
+                this.headerVisible = true
+              }
+            }
+            this.oldScrollTop = scrollTop
+            this.ticking = false
+          })
+        }
       }
     },
-    handleHeaderWidthChange: function() {},
+    handleHeaderWidthChange: function() {
+      const breadcrumb = this.$refs.breadcrumb
+      if (breadcrumb) {
+        breadcrumb.handleGetWidth()
+        breadcrumb.handleCheckWidth()
+      }
+      // this.$refs.menuHead
+    },
     handleReload: function() {
+      const isCurrentAlive = this.keepAlive.indexOf(this.$route.name) > -1
+      const routeName = this.$route.name
+      if (isCurrentAlive) {
+        this.keepAliveRemove(routeName)
+      }
       this.loadRouter = false
       this.$nextTick(() => {
         this.loadRouter = true
+        if (isCurrentAlive) {
+          this.keepAlivePush(routeName)
+        }
       })
     }
   },

@@ -17,6 +17,7 @@ const mutations = {
     state.log.push(log)
   },
   clean: function (state) {
+    console.log('clean')
     state.log = []
   }
 }
@@ -26,7 +27,7 @@ const actions = {
     rootState
   }, {
     message,
-    type,
+    type = 'info',
     meta
   }) {
     commit('push', {

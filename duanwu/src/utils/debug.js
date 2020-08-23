@@ -25,8 +25,8 @@ const cookies = {
   }
 }
 
-function makeIterator(array) {
-  return mapArray(array) || mapIterator(array) || throwErr
+/* function makeIterator(array) {
+  return mapArray(array) || mapIterator(array) || throwErr()
 }
 
 function throwErr() {
@@ -41,16 +41,15 @@ function mapIterator(array) {
 
 function mapArray(array) {
   if (Array.isArray(array)) {
-    const copyArr = []
+    const copyArr = new Array(array.length)
     for (let i = 0; i < array.length; i++) {
       copyArr[i] = array[i]
     }
     return copyArr
   }
-}
+} */
 
-function color() {
-  const colorAlias = arguments.length > 0 ? arguments[0] : 'default'
+function color(colorAlias = 'default') {
   let colorHash = ''
   switch (colorAlias) {
     case 'default':
@@ -80,7 +79,9 @@ const log = {
   },
   colorful: function (logArray) {
     const print = console
-    print.log.apply(print, ['%c'.concat(logArray.map(item => item.text || '').join('%c'))].concat(makeIterator(logArray.map(item => 'color: '.concat(color(logArray.type), ';')))))
+    print.log.apply(print, ['%c'.concat(logArray.map(item => item.text || '').join('%c'))].concat(...(logArray.map(item => {
+      return 'color: '.concat(color(item.type), ';')
+    }))))
   },
   default: function (log) {
     this.colorful([{
@@ -131,6 +132,12 @@ const title = function ({
   title = title ? ''.concat(title, '-').concat(titleSuffix) : titleSuffix
   title = count ? '('.concat(count, '条消息)').concat(title) : title
   window.document.title = title
+}
+export function animationFrame(callback) {
+  if ('requestAnimationFrame' in window) {
+    return window.requestAnimationFrame(callback)
+  }
+  setTimeout(callback, 16)
 }
 export default {
   cookies,

@@ -1,6 +1,6 @@
 <template>
   <Submenu :name="menu.path">
-    <template slot="title">
+    <template #title>
       <menu-side-title :menu="menu"></menu-side-title>
       <Badge
         v-if="badgeData"
@@ -35,7 +35,9 @@ export default {
   props: {
     menu: {
       type: Object,
-      default: () => {}
+      default: () => {
+        return {}
+      }
     }
   }
 }
