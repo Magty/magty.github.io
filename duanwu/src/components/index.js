@@ -1,4 +1,6 @@
 import Captcha from './captcha'
+import Description from './description'
+import DescriptionList from './description-list'
 import Email from './email'
 import Login from './login'
 import Mobile from './mobile'
@@ -29,6 +31,8 @@ import lineClamp from '../directive/line-clamp'
 
 const components = {
   Captcha,
+  Description,
+  DescriptionList,
   Email,
   Login,
   Mobile,

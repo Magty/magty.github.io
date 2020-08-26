@@ -19,7 +19,7 @@ export default {
         ...auth,
         title: '基础详情页'
       },
-      component: () => import('')
+      component: () => import('@/views/profile/basic')
     },
     {
       path: 'advanced',
@@ -28,7 +28,7 @@ export default {
         ...auth,
         title: '高级详情页'
       },
-      component: () => import('')
+      component: () => import('@/views/profile/advanced')
     }
   ]
 }

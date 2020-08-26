@@ -78,7 +78,7 @@ export const search = {
     title: '搜索列表（应用）'
   }]
 }
-const preFixProfile = '/profile'
+const preFixProfile = '/profile/'
 export const profile = {
   path: '/profile',
   title: '详情页面',
@@ -108,7 +108,7 @@ export const result = {
   }]
 }
 
-const preFixException = '/exception'
+const preFixException = '/exception/'
 export const exception = {
   path: '/exception',
   title: '异常页面',
@@ -141,7 +141,7 @@ export const setting = {
   }]
 }
 
-const preFixEditor = '/editor'
+const preFixEditor = '/editor/'
 export const editor = {
   path: '/editor',
   title: '编辑器',

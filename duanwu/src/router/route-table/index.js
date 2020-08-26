@@ -4,6 +4,7 @@ import settingRouters from './settingRouters'
 // import userRouters from './userRouters'
 import resultRouters from './resultRouters'
 import toolRouters from './toolRouters'
+import profileRouters from './profileRouters'
 export default [{
     path: '/',
     name: 'home',
@@ -67,5 +68,6 @@ export default [{
   dashboardRouters,
   settingRouters,
   resultRouters,
-  toolRouters
+  toolRouters,
+  profileRouters
 ]

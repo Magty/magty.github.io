@@ -1,40 +1,55 @@
 <template>
   <div class="ivu-page-header" :class="classes">
-    <div v-if="!hiddenBreadcrumb" class="ivu-page-header-breadcrumb">
-      <slot name="breadcrumb"></slot>
-      <Breadcrumb>
-        <BreadcrumbItem
-          v-for="(item,index) in breadcrumbList"
-          :key="index"
-          :to="item.to"
-          :replace="item.replace"
-          :target="item.target"
-        ></BreadcrumbItem>
-      </Breadcrumb>
+    <div v-if="this.$slots.breadcrumb || !hiddenBreadcrumb" class="ivu-page-header-breadcrumb">
+      <slot name="breadcrumb">
+        <Breadcrumb>
+          <BreadcrumbItem
+            v-for="(item,index) in breadcrumbList"
+            :key="index"
+            :to="item.to"
+            :replace="item.replace"
+            :target="item.target"
+          >{{item.title}}</BreadcrumbItem>
+        </Breadcrumb>
+      </slot>
     </div>
     <div class="ivu-page-header-detail">
-      <div v-if="back" class="ivu-page-header-back" @click="handleBack">
-        <Icon type="md-arrow-back"></Icon>
+      <div v-if="back || this.$slots.back" class="ivu-page-header-back" @click="handleBack">
+        <slot name="back">
+          <Icon type="md-arrow-back"></Icon>
+        </slot>
         <Divider type="vertical"></Divider>
       </div>
-    </div>
-    <div v-if="logo" class="ivu-page-header-logo">
-      <img :src="logo" />
-    </div>
-    <div class="ivu-page-header-main">
-      <div class="ivu-page-header-row">
-        <div @click="handleBack" v-if="back || $slots.back" class="ivu-page-header-back">
-          <Icon type="md-arrow-back"></Icon>
-          <Divider type="vertical"></Divider>
+      <div v-if="logo || this.$slots.logo" class="ivu-page-header-logo">
+        <slot name="logo">
+          <img :src="logo" />
+        </slot>
+      </div>
+      <div class="ivu-page-header-main">
+        <div class="ivu-page-header-row">
+          <div @click="handleBack" v-if="back || this.$slots.back" class="ivu-page-header-back">
+            <slot name="back">
+              <Icon type="md-arrow-back"></Icon>
+            </slot>
+            <Divider type="vertical"></Divider>
+          </div>
+          <div v-if="title || this.$slots.title" class="ivu-page-header-title">
+            <slot name="title">{{title}}</slot>
+          </div>
+          <div v-if="action || this.$slots.action" class="ivu-page-header-action">
+            <slot name="action">{{action}}</slot>
+          </div>
         </div>
-        <div v-if="title" class="ivu-page-header-title">{{title}}</div>
-        <div v-if="action" class="ivu-page-header-action">{{action}}</div>
-      </div>
-      <div class="ivu-page-header-row">
-        <div v-if="content" class="ivu-page-header-content">{{ content}}</div>
+        <div class="ivu-page-header-row">
+          <div v-if="content || this.$slots.content" class="ivu-page-header-content">
+            <slot name="content">{{content}}</slot>
+          </div>
+          <div v-if="extra || this.$slots.extra" class="ivu-page-header-extra">
+            <slot name="extra">{{ extra }}</slot>
+          </div>
+        </div>
       </div>
     </div>
-    <div v-if="extra" class="ivu-page-header-extra">{{ extra }}</div>
     <div v-if="tabList && tabList.length" class="ivu-page-header-tabs">
       <Tabs @on-click="handleTabChange" :animated="false" :value="tabActiveKey">
         <TabPane v-for="(item,index) in tabList" :key="index" :label="label" :name="name"></TabPane>

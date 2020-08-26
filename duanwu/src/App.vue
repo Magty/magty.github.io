@@ -24,6 +24,9 @@ export default {
   },
   mounted: function() {
     on(window, 'resize', this.handleWindowResize)
+    this.$on('hook:beforeDestroy', () => {
+      off(window, 'resize', this.handleWindowResize)
+    })
     this.handleMatchMedia()
     setTimeout(() => {
       this.$Notice.open({
@@ -81,7 +84,7 @@ export default {
     }, 15 * 1000)
   },
   beforeDestroy: function() {
-    off(window, 'resize', this.handleWindowResize)
+    // off(window, 'resize', this.handleWindowResize)
   }
 }
 </script>
@@ -122,6 +125,17 @@ body {
 .i-scrollbar::-webkit-scrollbar-thumb {
   background: #808695;
   border-radius: 4px;
+}
+.i-table-no-border {
+  .ivu-table {
+    th {
+      background-color: #fff;
+    }
+    &-wrapper,
+    tr:last-child td {
+      border: none;
+    }
+  }
 }
 .ivu-menu-dark {
   background: #191a23;
