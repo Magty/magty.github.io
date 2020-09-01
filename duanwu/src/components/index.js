@@ -1,16 +1,25 @@
+import AvatarList from './avatar-list'
 import Captcha from './captcha'
+import City from './city'
+import CountDown from './count-down'
+import CountUp from './count-up'
 import Description from './description'
 import DescriptionList from './description-list'
 import Email from './email'
+import Grid from './grid'
+import GridItem from './grid-item'
 import Login from './login'
 import Mobile from './mobile'
+import Numeral from './numeral'
 import Notification from './notification'
 import NotificationTab from './notification-tab'
 import NotificationItem from './notification-item'
+import NumberInfo from './number-info'
 import PageHeader from './page-header'
 import Password from './password'
 import Result from './result'
 import Submit from './submit'
+import Trend from './trend'
 import UserName from './user-name'
 
 import Copy from './base/copy'
@@ -22,6 +31,7 @@ import locale from '../local/index'
 import resize from '../directive/resize'
 import styles from '../directive/styles'
 import lineClamp from '../directive/line-clamp'
+import filters from './filters'
 
 /* const Notification = {
   install: function (Vue) {
@@ -30,19 +40,28 @@ import lineClamp from '../directive/line-clamp'
 } */
 
 const components = {
+  AvatarList,
   Captcha,
+  City,
+  CountDown,
+  CountUp,
   Description,
   DescriptionList,
   Email,
+  Grid,
+  GridItem,
   Login,
   Mobile,
+  Numeral,
   Notification,
   NotificationItem,
   NotificationTab,
+  NumberInfo,
   PageHeader,
   Password,
   Result,
   Submit,
+  Trend,
   UserName
 }
 
@@ -57,10 +76,6 @@ const directives = {
   'bg-color': styles.bgColor,
   resize,
   'line-clamp': lineClamp
-}
-
-const filters = {
-
 }
 
 const install = (Vue, opts = {}) => {

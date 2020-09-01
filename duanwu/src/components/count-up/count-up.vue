@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import CountUp from 'countup.js'
+import { CountUp } from 'countup.js'
 export default {
   name: 'CountUp',
   props: {
@@ -16,7 +16,27 @@ export default {
       type: Number,
       required: true
     },
-    decimals: {
+    useEasing: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
+    useGrouping: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
+    separator: {
+      type: String,
+      required: false,
+      default: ','
+    },
+    decimal: {
+      type: String,
+      required: false,
+      default: '.'
+    },
+    decimalplaces: {
       type: Number,
       required: false,
       default: 0
@@ -25,6 +45,16 @@ export default {
       type: Number,
       required: false,
       default: 2
+    },
+    prefix: {
+      type: String,
+      required: false,
+      default: ''
+    },
+    suffix: {
+      type: String,
+      required: false,
+      default: ''
     },
     options: {
       type: Object,
@@ -60,12 +90,18 @@ export default {
           prefix: this.prefix,
           suffix: this.suffix,
           duration: this.duration,
-          decimalPlaces: this.decimals
+          useEasing: this.useEasing,
+          useGrouping: this.useGrouping,
+          separator: this.separator,
+          decimal: this.decimal,
+          decimalPlaces: this.decimalplaces
         })
       }
-      this.CountUp.start(() => {
-        this.callback(this.CountUp)
-      })
+      if (!this.CountUp.error) {
+        this.CountUp.start(() => {
+          this.callback(this.CountUp)
+        })
+      }
     },
     destory: function() {
       this.CountUp = null

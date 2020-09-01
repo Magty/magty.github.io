@@ -1,8 +1,13 @@
 <template>
-  <span class="ivu-numeral"></span>
+  <span class="ivu-numeral">
+    <slot name="prefix">{{prefix}}</slot>
+    {{currentValue}}
+    <slot name="suffix">{{suffix}}</slot>
+  </span>
 </template>
 
 <script>
+import Numeral from 'numeral'
 export default {
   name: 'Numeral',
   props: {
@@ -35,9 +40,12 @@ export default {
   methods: {
     init: function() {
       if (this.value) {
-        this.format
-          ? (this.currentValue = this.format(this.format))
-          : (this.currentValue = this.value())
+        const value = Numeral(this.value)
+        if (this.format) {
+          this.currentValue = value.format(this.format)
+        } else {
+          this.currentValue = value.value()
+        }
         this.$emit('on-change', this.currentValue)
       }
     },

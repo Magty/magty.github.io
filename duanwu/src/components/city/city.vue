@@ -4,7 +4,7 @@
       trigger="custom"
       :visible="visible"
       :transfer="transfer"
-      :placement="bottom-start"
+      placement="bottom-start"
       transfer-class-name="ivu-city-transfer"
       @on-visible-change="handleVisibleChange"
       @on-clickoutside="handleClickOutside"
@@ -25,7 +25,11 @@
       <DropdownMenu slot="list">
         <div class="ivu-city-drop">
           <div v-if="cities.length" class="ivu-city-drop-cities">
-            <span v-for="item in cities" :key="item" @click="handleChangeValue(item.c)"></span>
+            <span
+              v-for="item in relCities"
+              :key="item"
+              @click="handleChangeValue(item.c)"
+            >{{item.n}}</span>
           </div>
           <div class="ivu-city-drop-menu">
             <div class="ivu-city-drop-type">
@@ -59,18 +63,19 @@
             </div>
             <div ref="list" class="ivu-city-drop-list-main">
               <dl>
-                <dt
-                  v-for="cityList in cityListByProvince"
-                  :key="`dt${cityList.p.l}`"
-                  :class="`ivu-city-${cityList.p.l}`"
-                >{{ cityList.p.n + ':' }}</dt>
-                <slot name="dd">
-                  <li
-                    @click="handleChangeValue(city.c)"
-                    v-for="city in cityList.c"
-                    :key="`city_${city.c}`"
-                  >{{city.n}}</li>
-                </slot>
+                <template v-for="(cityList,index) in cityListByProvince">
+                  <dt
+                    :class="`ivu-city-${cityList.p.l}`"
+                    :key="`dt_${index}_${cityList.p.l}`"
+                  >{{ cityList.p.n + '： ' }}</dt>
+                  <dd :key="`dd_${index}_${cityList.p.l}`">
+                    <li
+                      @click="handleChangeValue(city.c)"
+                      v-for="city in cityList.c"
+                      :key="`city_${city.c}`"
+                    >{{city.n}}</li>
+                  </dd>
+                </template>
               </dl>
             </div>
           </div>
@@ -81,19 +86,21 @@
                 :key="index"
                 type="border"
                 :fade="false"
-                @click.native="handleClickLetter(cityList)"
-              ></Tag>
+                @click.native="handleClickLetter(index)"
+              >{{index}}</Tag>
             </div>
             <div ref="list" class="ivu-city-drop-list-main ivu-city-drop-list-main-city">
               <dl>
-                <dt
-                  v-for="(city,index) in cityListByLetter"
-                  :key="`list_${index}`"
-                  :class="`ivu-city-${index}`"
-                >{{ index + ':'}}</dt>
-                <slot name="dd">
-                  <li @click="handleChangeValue(city.c)">{{ city.n }}</li>
-                </slot>
+                <template v-for="(cityList,index) in cityListByLetter">
+                  <dt :key="`dtlist_${index}`" :class="`ivu-city-${index} `">{{ index + ': '}}</dt>
+                  <dd :key="`ddlist_${index}`">
+                    <li
+                      @click="handleChangeValue(city.c)"
+                      v-for="city in cityList"
+                      :key="`city_${city.c}`"
+                    >{{ city.n }}</li>
+                  </dd>
+                </template>
               </dl>
             </div>
           </div>
@@ -104,7 +111,10 @@
 </template>
 
 <script>
-import { oneOf, deepCopy } from '@/utils/tool'
+import { oneOf, deepCopy } from '@/utils/assist'
+import mixin from './emitter'
+import letterCities from './cities'
+import provinces from './provinces'
 function replaceCity(city) {
   return city
     .replace('市', '')
@@ -116,11 +126,16 @@ function getCityByName(cityList, name) {
     return ''
   }
   const city = cityList.find(item => item.n === name)
-  return city ? city.c : ''
+  if (city) {
+    return city.c
+  } else {
+    console.error('[iView Pro warn]: City name error.')
+    return ''
+  }
 }
 export default {
-  name: 'city',
-  mixins: [],
+  name: 'City',
+  mixins: [mixin],
   props: {
     value: {
       type: String
@@ -147,16 +162,15 @@ export default {
     },
     size: {
       validator: value => oneOf(value, ['small', 'large', 'default']),
-      default: () =>
-        this.$IVIEWPRO && this.$IVIEWPRO.size !== ''
-          ? this.$IVIEWPRO.size
-          : 'default'
+      default: function() {
+        return (this.$IVIEWPRO && this.$IVIEWPRO.size !== '') ? this.$IVIEWPRO.size : 'default'
+      }
     },
     transfer: {
       type: Boolean,
-      default: () =>
-        !(!this.$IVIEWPRO || this.$IVIEWPRO.transfer === '') &&
-        this.$IVIEWPRO.transfer
+      default: function() {
+        return !(!this.$IVIEWPRO || this.$IVIEWPRO.transfer === '') && this.$IVIEWPRO.transfer
+      }
     },
     name: {
       type: String
@@ -175,20 +189,18 @@ export default {
   },
   data() {
     function getAllCities() {
-      const all = deepCopy()
+      const all = deepCopy(letterCities)
       const cities = []
       for (const key in all) {
-        cities.push({
-          n: replaceCity(all[key])
-        })
+        const city = all[key]
+        city.n = replaceCity(city.n)
+        cities.push(city)
       }
       return cities
     }
     const allCities = getAllCities()
     return {
-      currentValue: this.useName
-        ? getCityByName(allCities, this.value)
-        : this.value,
+      currentValue: this.useName ? getCityByName(allCities, this.value) : this.value,
       visible: false,
       provinceList: [],
       cityListByProvince: [],
@@ -199,10 +211,8 @@ export default {
     }
   },
   watch: {
-    value: newValue => {
-      this.currentValue = this.useName
-        ? getCityByName(this.allCities, newValue)
-        : newValue
+    value(newValue) {
+      this.currentValue = this.useName ? getCityByName(this.allCities, newValue) : newValue
     }
   },
   computed: {
@@ -222,9 +232,9 @@ export default {
       const cities = []
       if (this.cities) {
         this.cities.forEach(item => {
-          cities.push({
-            n: item.n
-          })
+          const city = letterCities[item]
+          city.n = replaceCity(city.n)
+          cities.push(city)
         })
       }
       return cities
@@ -233,17 +243,18 @@ export default {
       if (!this.currentValue) {
         return this.placeholder
       }
-      return this.showSuffix
-        ? this.currentValue.n
-        : replaceCity(this.currentValue.n)
+      const n = letterCities[this.currentValue].n
+      return this.showSuffix ? n : replaceCity(n)
     }
   },
   methods: {
     handleSelect: function(select) {
-      this.handleChangeValue(select)
-      this.$nextTick(() => {
-        this.queryCity = ''
-      })
+      if (select) {
+        this.handleChangeValue(select)
+        this.$nextTick(() => {
+          this.queryCity = ''
+        })
+      }
     },
     handleChangeValue: function(select) {
       this.currentValue = select
@@ -255,8 +266,8 @@ export default {
           })(this.allCities, select)
         : select
       this.$emit('input', change)
-      this.$emit('on-change', change)
-      this.dispatch('FormItem', 'on-form-change', change)
+      this.$emit('on-change', letterCities[select])
+      this.dispatch('FormItem', 'on-form-change', select)
     },
     handleClickLetter: function(letter) {
       if (letter === '直辖市') {
@@ -367,10 +378,92 @@ export default {
           c: []
         }
       }
+      for (const key in provinces) {
+        const province = provinces[key]
+        cityMap[province.l].p.push(province)
+      }
       this.provinceList = cityMap
     },
-    handleGetCityByProvince: function() {},
-    handleGetCityByLetter: function() {}
+    handleGetCityByProvince: function() {
+      const provinceList = deepCopy(this.provinceList)
+      const citys = []
+      const cities = deepCopy(letterCities)
+      const special = [
+        {
+          p: {
+            n: '直辖市',
+            p: '86',
+            l: 'Z1'
+          },
+          c: []
+        }, {
+          p: {
+            n: '港澳',
+            p: '86',
+            l: 'Z2'
+          },
+          c: []
+        }
+      ]
+      for (const key in provinceList) {
+        for (let province = provinceList[key], index = 0; index < province.p.length; index++) {
+          const city = province.p[index]
+          const name = city.c
+          const cityInfo = {
+            p: city,
+            c: []
+          }
+          for (var k in cities) {
+            const value = cities[k]
+            value.n = replaceCity(value.n)
+            if (name === value.p) {
+              cityInfo.c.push(value)
+            }
+          }
+          if (key === 'Z1') {
+            special[0].c.push(cities[name])
+          } else if (key === 'Z2') {
+            special[1].c.push(cities[name])
+          } else {
+            citys.push(cityInfo)
+          }
+        }
+      }
+      this.cityListByProvince = citys.concat(special)
+    },
+    handleGetCityByLetter: function() {
+      const cities = deepCopy(letterCities)
+      const letters = {
+        A: [],
+        B: [],
+        C: [],
+        D: [],
+        E: [],
+        F: [],
+        G: [],
+        H: [],
+        J: [],
+        K: [],
+        L: [],
+        M: [],
+        N: [],
+        P: [],
+        Q: [],
+        R: [],
+        S: [],
+        T: [],
+        W: [],
+        X: [],
+        Y: [],
+        Z: []
+      }
+      for (const key in cities) {
+        const city = cities[key]
+        city.n = replaceCity(city.n)
+        letters[city.l].push(city)
+      }
+      this.cityListByLetter = letters
+    }
   },
   created: function() {
     this.handleGetProvinceByLetter()
@@ -380,5 +473,101 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+.ivu-city {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  .ivu-dropdown {
+    width: 100%;
+  }
+  &-rel {
+    display: inline-block;
+    width: 100%;
+    position: relative;
+    cursor: pointer;
+  }
+  &-arrow {
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+  }
+  &-visible {
+    .ivu-city-arrow:nth-of-type(2) {
+      -webkit-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+      transform: rotate(180deg);
+    }
+  }
+  .ivu-select-dropdown {
+    width: 400px;
+  }
+  &-drop {
+    width: 400px;
+    padding: 2px 8px;
+    &-cities {
+      margin-bottom: 8px;
+      span {
+        display: inline-block;
+        margin-right: 4px;
+        cursor: pointer;
+        &:hover {
+          color: #57a3f3;
+        }
+      }
+    }
+    &-menu {
+      margin-bottom: 8px;
+    }
+    &-type {
+      display: inline-block;
+    }
+    &-search {
+      display: inline-block;
+      margin-left: 8px;
+    }
+    &-list {
+      &-letter {
+        margin-bottom: 8px;
+        .ivu-tag {
+          cursor: pointer;
+          &:hover .ivu-tag-text {
+            color: #57a3f3;
+          }
+        }
+      }
+      &-main {
+        max-height: 200px;
+        overflow: auto;
+        dt {
+          float: left;
+          font-weight: 700;
+        }
+        dd {
+          white-space: normal;
+          -webkit-margin-start: 40px;
+          margin-inline-start: 40px;
+          margin-bottom: 8px;
+          li {
+            display: inline-block;
+            margin-right: 9px;
+            cursor: pointer;
+            &:hover {
+              color: #57a3f3;
+            }
+          }
+        }
+        &-city {
+          dd {
+            -webkit-margin-start: 24px;
+            margin-inline-start: 24px;
+          }
+        }
+      }
+    }
+  }
+  &-transfer.ivu-select-dropdown {
+    max-height: none;
+    overflow: visible;
+  }
+}
 </style>

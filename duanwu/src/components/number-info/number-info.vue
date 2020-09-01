@@ -1,12 +1,18 @@
 <template>
   <div class="ivu-number-info">
-    <div v-if="title||$slots.title" class="ivu-number-info-title">{{title}}</div>
-    <div v-if="subTitle || $slots.subTitle" class="ivu-number-info-subTitle">{{ subTitle }}</div>
+    <div v-if="title||this.$slots.title" class="ivu-number-info-title">
+      <slot name="title">{{title}}</slot>
+    </div>
+    <div v-if="subTitle || this.$slots.subTitle" class="ivu-number-info-subTitle">
+      <slot name="subTitle">{{ subTitle }}</slot>
+    </div>
     <div class="ivu-number-info-value" :class="valueStyle">
       <span class="ivu-number-info-total">{{ total }}</span>
-      <span v-if="subTotal || $slots.subTotal" class="ivu-number-info-subTotal">
-        {{ subTotal }}
-        <Trend :flag="status"></Trend>
+      <span v-if="subTotal || this.$slots.subTotal" class="ivu-number-info-subTotal">
+        <slot name="subTotal">
+          <Trend :flag="status"></Trend>
+          {{ subTotal }}
+        </slot>
       </span>
     </div>
   </div>
@@ -53,5 +59,48 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+.ivu-number-info {
+  &-title {
+    margin-bottom: 16px;
+    color: #17233d;
+    font-size: 16px;
+    -webkit-transition: all 0.2s;
+    transition: all 0.2s;
+  }
+  &-subTitle {
+    height: 22px;
+    color: #808695;
+    font-size: 14px;
+    line-height: 22px;
+  }
+  &-subTitle,
+  &-value {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: break-all;
+  }
+  &-value {
+    margin-top: 4px;
+    font-size: 0;
+  }
+  &-total {
+    margin-right: 32px;
+    color: #515a6e;
+    font-size: 24px;
+  }
+  &-subTotal,
+  &-total {
+    display: inline-block;
+    height: 32px;
+    line-height: 32px;
+  }
+  &-subTotal {
+    margin-right: 0;
+    vertical-align: top;
+    font-size: 14px;
+    color: #808695;
+  }
+}
 </style>

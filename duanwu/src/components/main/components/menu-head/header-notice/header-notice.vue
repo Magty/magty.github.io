@@ -1,4 +1,4 @@
-<template>
+ <template>
   <span class="i-layout-header-trigger i-layout-header-trigger-min i-layout-header-trigger-in">
     <Notification
       class="i-layout-header-notice"

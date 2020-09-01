@@ -3,7 +3,7 @@
     <div class="page-account-container page-account-container-result">
       <div class="page-account-top">
         <div class="page-account-top-logo">
-          <img src="../../assets/images/login/logo.png" alt="logo" />
+          <img src="../../assets/images/logo.png" alt="logo" />
         </div>
         <div class="page-account-top-desc">端午安康</div>
       </div>

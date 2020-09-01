@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import elementResizeDetectorMaker from 'element-resize-detector'
 import lodash from 'lodash'
 export default {
   name: 'Grid',
@@ -61,7 +62,7 @@ export default {
   },
   mounted: function() {
     this.handleResize = lodash.throttle(this.onResize, 150, { leading: false })
-
+    this.observer = elementResizeDetectorMaker()
     this.observer.listenTo(this.$refs.grid, this.handleResize)
   },
   beforeDestroy: function() {
@@ -71,4 +72,27 @@ export default {
 </script>
 
 <style lang="scss">
+.ivu-grid {
+  &:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+  &-item {
+    position: relative;
+    float: left;
+    width: 33.33%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 0;
+    border-radius: 0;
+    -webkit-transition: -webkit-box-shadow 0.2s ease-in-out;
+    transition: -webkit-box-shadow 0.2s ease-in-out;
+    transition: box-shadow 0.2s ease-in-out;
+    transition: box-shadow 0.2s ease-in-out, -webkit-box-shadow 0.2s ease-in-out;
+    &-main {
+      padding: 24px;
+    }
+  }
+}
 </style>

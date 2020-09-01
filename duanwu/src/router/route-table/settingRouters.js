@@ -19,7 +19,7 @@ export default {
         ...auth,
         title: '个人中心'
       },
-      component: () => import('@/views/single-page/users')
+      component: () => import('@/views/single-page/user')
     },
     {
       path: 'account',
@@ -28,7 +28,7 @@ export default {
         ...auth,
         title: '个人设置'
       },
-      component: () => import('@/views/single-page/users/setting.vue')
+      component: () => import('@/views/single-page/account')
     }
   ]
 }

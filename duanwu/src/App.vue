@@ -898,7 +898,7 @@ body {
   padding-top: 24px;
 }
 
-.ivu-city {
+/* .ivu-city {
   display: inline-block;
   position: relative;
 }
@@ -1009,7 +1009,7 @@ body {
 .ivu-city-transfer.ivu-select-dropdown {
   max-height: none;
   overflow: visible;
-}
+} */
 
 .ivu-description-list-title {
   margin-bottom: 16px;

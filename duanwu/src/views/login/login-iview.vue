@@ -6,7 +6,7 @@
     <div class="page-account-container">
       <div class="page-account-top">
         <div class="page-account-top-logo">
-          <img src="../../assets/images/login/logo.png" alt="logo" />
+          <img src="../../assets/images/logo.png" alt="logo" />
         </div>
         <div class="page-account-top-desc">端午安康</div>
       </div>
@@ -35,9 +35,9 @@
 </template>
 
 <script>
-import wechat from '@/assets/images/login/icon-social-wechat.svg'
-import qq from '@/assets/images/login/icon-social-qq.svg'
-import weibo from '@/assets/images/login/icon-social-weibo.svg'
+import wechat from '@/assets/images/icon-social-wechat.svg'
+import qq from '@/assets/images/icon-social-qq.svg'
+import weibo from '@/assets/images/icon-social-weibo.svg'
 import { homeName } from '@/config/settings'
 import copyright from '_c/copyright'
 

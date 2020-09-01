@@ -6,18 +6,16 @@
       </Tooltip>
       <Avatar v-else :src="item.src" :size="size" :shape="shape"></Avatar>
     </div>
-    <slot name="extra">
-      <div class="ivu-avatar-list-item ivu-avatar-list-item-excess">
-        <Avatar :style="excessStyle" :size="size" :shape="shape">
-          <slot name="excess">{{'+' + list.length - max}}</slot>
-        </Avatar>
-      </div>
-    </slot>
+    <div v-if="this.$slots.extra" class="ivu-avatar-list-item ivu-avatar-list-item-excess">
+      <Avatar :style="excessStyle" :size="size" :shape="shape">
+        <slot name="excess">{{'+' + list.length - max}}</slot>
+      </Avatar>
+    </div>
   </div>
 </template>
 
 <script>
-import { oneOf } from '@/utils/tool'
+import { oneOf } from '@/utils/assist'
 export default {
   name: 'AvatarList',
   props: {

@@ -53,5 +53,36 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+.ivu-trend {
+  display: inline-block;
+  &-text {
+    vertical-align: middle;
+  }
+  &-colorful.ivu-trend-up {
+    .ivu-trend-flag {
+      color: #ed4014;
+    }
+  }
+  &-colorful.ivu-trend-down,
+  &-reverse-color.ivu-trend-colorful.ivu-trend-up {
+    .ivu-trend-flag {
+      color: #19be6b;
+    }
+  }
+  &-colorful.ivu-trend-text-color.ivu-trend-up .ivu-trend-text,
+  &-reverse-color.ivu-trend-colorful.ivu-trend-down .ivu-trend-flag {
+    color: #ed4014;
+  }
+  &-colorful.ivu-trend-text-color.ivu-trend-down,
+  &-reverse-color.ivu-trend-colorful.ivu-trend-text-color.ivu-trend-up {
+    .ivu-trend-text {
+      color: #19be6b;
+    }
+  }
+  &-reverse-color.ivu-trend-colorful.ivu-trend-text-color.ivu-trend-down
+    .ivu-trend-text {
+    color: #ed4014;
+  }
+}
 </style>

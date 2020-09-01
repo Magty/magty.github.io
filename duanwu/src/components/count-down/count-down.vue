@@ -1,8 +1,11 @@
 <template>
-  <span class="ivu-count-up"></span>
+  <span>{{result}}</span>
 </template>
 
 <script>
+function formatTime(time) {
+  return ('00' + time).substr(-2)
+}
 export default {
   name: 'CountDown',
   props: {
@@ -56,14 +59,14 @@ export default {
       const hour = Math.floor(time / 3600000)
       const min = Math.floor((time - 3600000 * hour) / 60000)
       const sec = Math.floor((time - 3600000 * hour - min * 60000) / 1000)
-      return `${hour}:${min}:${sec}`
+      return `${formatTime(hour)}:${formatTime(min)}:${formatTime(sec)}`
     }
   },
   computed: {
-    result: function() {
+    result() {
       return this.format
-        ? this.defaultFormat(this.lastTime)
-        : this.format(this.lastTime)
+        ? this.format(this.lastTime)
+        : this.defaultFormat(this.lastTime)
     }
   },
   watch: {
@@ -76,7 +79,10 @@ export default {
   created: function() {
     this.lastTime = this.initTime()
   },
-  beforeDestroy: function() {
+  mounted() {
+    this.tick()
+  },
+  beforeDestroy() {
     this.timer && clearTimeout(this.timer)
   }
 }

@@ -1,9 +1,11 @@
 <template>
-  <div>个人设置</div>
+  <div></div>
 </template>
 
 <script>
-export default {}
+export default {
+
+}
 </script>
 
 <style>

@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import { getStyle } from '@/utils/assist'
 export default {
   name: 'GridItem',
   inject: ['GridInstance'],
@@ -25,7 +26,7 @@ export default {
     styles: function() {
       const style = { width: 100 / this.col + '%' }
       if (this.height && this.square) {
-        style.height = String(this.height) + 'px'
+        style.height = this.height + 'px'
       }
       return style
     },
@@ -49,7 +50,7 @@ export default {
   methods: {
     handleChangeHeight: function() {
       if (this.square) {
-        this.height = parseFloat(this.$refs.col.$el.clintWidth)
+        this.height = parseFloat(getStyle(this.$refs.col, 'width'))
       }
     }
   },
@@ -60,27 +61,4 @@ export default {
 </script>
 
 <style lang="scss">
-.ivu-grid {
-  &:after {
-    content: '';
-    display: block;
-    clear: both;
-  }
-  &-item {
-    position: relative;
-    float: left;
-    width: 33.33%;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    border: 0;
-    border-radius: 0;
-    -webkit-transition: -webkit-box-shadow 0.2s ease-in-out;
-    transition: -webkit-box-shadow 0.2s ease-in-out;
-    transition: box-shadow 0.2s ease-in-out;
-    transition: box-shadow 0.2s ease-in-out, -webkit-box-shadow 0.2s ease-in-out;
-    &-main {
-      padding: 24px;
-    }
-  }
-}
 </style>
