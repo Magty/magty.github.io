@@ -84,7 +84,7 @@
             </Tabs>
           </div>
           <div class="ivu-pl ivu-pr ivu-pb">
-            <articleTemplate v-if="'article' === currentTab" :article-list="articleList"></articleTemplate>
+            <articleTemplate v-if="'article' === currentTab" :article-list="articleList" hide-cover></articleTemplate>
             <projectTemplate
               v-if="'project' === currentTab"
               :project-list="projectList"

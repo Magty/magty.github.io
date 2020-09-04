@@ -1,8 +1,10 @@
 import Main from '_c/main'
 import dashboardRouters from './dashboardRouters'
+import listRouters from './listRouters'
 import settingRouters from './settingRouters'
 // import userRouters from './userRouters'
 import resultRouters from './resultRouters'
+import searchRouters from './searchRouters'
 import toolRouters from './toolRouters'
 import profileRouters from './profileRouters'
 export default [{
@@ -66,8 +68,10 @@ export default [{
     ]
   },
   dashboardRouters,
+  listRouters,
   settingRouters,
   resultRouters,
+  searchRouters,
   toolRouters,
   profileRouters
 ]

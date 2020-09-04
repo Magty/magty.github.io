@@ -112,7 +112,7 @@
 
 <script>
 import { oneOf, deepCopy } from '@/utils/assist'
-import mixin from './emitter'
+import mixin from '../base/emitter'
 import letterCities from './cities'
 import provinces from './provinces'
 function replaceCity(city) {

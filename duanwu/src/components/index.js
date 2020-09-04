@@ -5,6 +5,7 @@ import CountDown from './count-down'
 import CountUp from './count-up'
 import Description from './description'
 import DescriptionList from './description-list'
+import Ellipsis from './ellipsis'
 import Email from './email'
 import Grid from './grid'
 import GridItem from './grid-item'
@@ -19,6 +20,8 @@ import PageHeader from './page-header'
 import Password from './password'
 import Result from './result'
 import Submit from './submit'
+import TagSelect from './tag-select'
+import TagSelectOption from './tag-select-option'
 import Trend from './trend'
 import UserName from './user-name'
 
@@ -47,6 +50,7 @@ const components = {
   CountUp,
   Description,
   DescriptionList,
+  Ellipsis,
   Email,
   Grid,
   GridItem,
@@ -61,6 +65,8 @@ const components = {
   Password,
   Result,
   Submit,
+  TagSelect,
+  TagSelectOption,
   Trend,
   UserName
 }

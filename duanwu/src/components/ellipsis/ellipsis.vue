@@ -35,7 +35,20 @@
 </template>
 
 <script>
-import { oneOf } from '@/utils/tool'
+import { oneOf, getStyle } from '@/utils/assist'
+function getTextLength(text = '') {
+  return text.split('').reduce((total, cur) => {
+    const first = cur.charCodeAt(0)
+    return first >= 0 && first <= 1128 ? total + 1 : total + 2
+  })
+}
+function getMaxLengthStr(text = '', max) {
+  var len = 0
+  return text.split('').reduce((total, cur) => {
+    const first = cur.charCodeAt(0)
+    return (len += first >= 0 && first <= 128 ? 1 : 2) <= max ? total + cur : total
+  })
+}
 export default {
   name: 'Ellipsis',
   props: {
@@ -77,7 +90,7 @@ export default {
       }
     },
     theme: {
-      validator: value => oneOf(value, ['dark', 'light']),
+      validator: function(value) { return oneOf(value, ['dark', 'light']) },
       default: 'dark'
     },
     maxWidth: {
@@ -135,21 +148,38 @@ export default {
       this.oversize = false
       this.computedReady = false
       this.$nextTick(() => {
-        // const $text = this.$refs.text
-        // const $el = this.$el
+        const $text = this.$refs.text
+        const el = this.$el
+        const more = this.$refs.more
+        let maxLen = 1000
+        let text = this.text
         let height = this.height
         if (!height && this.lines) {
-          height = parseInt(this.$el.lineHeight, 10) * this.lines
-        }
-        if (this.length) {
-          const length = this.text.length
-          if (this.fullWidthRecognition) {
+          height = parseInt(getStyle(el, 'lineHeight'), 10) * this.lines
+          if (this.length) {
+            let length = text.length
+            if (this.fullWidthRecognition) {
+              length = getTextLength(text)
+            }
+            if (length > this.length) {
+              this.oversize = true
+              more.style.display = 'inline-block'
+              text = this.fullWidthRecognition ? getMaxLengthStr(text, this.length) : text.splice(0, this.length)
+            }
+          } else if (el.offsetHeight > height ) {
+            for (this.oversize = true, more.style.disply = 'inline-block'; el.offsetHeight > height && maxLen > 0;) {
+              if (el.offsetHeight > 3 * height) {
+                text = text.substring(0, Math.floor(text.length / 2))
+                $text.innerText = text
+              } else {
+                text = text.substring(0, text.length - 1)
+                $text.innerText = text
+              }
+              maxLen--
+            }
           }
-          if (length > this.length) {
-            this.oversize = true
-            this.$refs.more.style.display = 'inline-block'
-          }
         }
+        this.computedText = text
       })
     },
     limitShow: function() {
@@ -169,5 +199,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+.ivu-ellipsis-hidden {
+  visibility: hidden;
+}
 </style>

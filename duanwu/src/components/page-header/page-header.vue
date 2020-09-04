@@ -52,7 +52,7 @@
     </div>
     <div v-if="tabList && tabList.length" class="ivu-page-header-tabs">
       <Tabs @on-click="handleTabChange" :animated="false" :value="tabActiveKey">
-        <TabPane v-for="(item,index) in tabList" :key="index" :label="label" :name="name"></TabPane>
+        <TabPane v-for="(item,index) in tabList" :key="index" :label="item.label" :name="item.name"></TabPane>
       </Tabs>
     </div>
   </div>
@@ -96,22 +96,22 @@ export default {
     },
     wide: {
       type: Boolean,
-      default: !1
+      default: false
     }
   },
   computed: {
-    classes: function() {
+    classes: function () {
       return {
         'ivu-page-header-wide': this.wide
       }
     }
   },
   methods: {
-    handleTabChange: function(name) {
-      var tab = this.tabList.find(item => item.name === name)
-      this.$emit('on-tab-change', JSON.parse(tab))
+    handleTabChange: function (name) {
+      const tab = this.tabList.find((item) => item.name === name)
+      this.$emit('on-tab-change', tab)
     },
-    handleBack: function() {
+    handleBack: function () {
       this.$emit('on-back')
     }
   }

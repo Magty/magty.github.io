@@ -19,7 +19,7 @@ export default {
         ...auth,
         title: '搜索列表（文章）'
       },
-      component: () => import('')
+      component: () => import('@/views/search/search-article')
     },
     {
       path: 'search-projects',
@@ -28,7 +28,7 @@ export default {
         ...auth,
         title: '搜索列表（项目）'
       },
-      component: () => import('')
+      component: () => import('@/views/search/search-projects')
     },
     {
       path: 'search-apps',
@@ -37,7 +37,7 @@ export default {
         ...auth,
         title: '搜索列表（应用）'
       },
-      component: () => import('')
+      component: () => import('@/views/search/search-apps')
     }
   ]
 }

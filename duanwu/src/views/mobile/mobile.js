@@ -1,3 +1,4 @@
+import message from '../register/message'
 export default {
   name: 'Mobile',
   mixins: [],
@@ -15,7 +16,7 @@ export default {
       default: function () {
         return [{
           required: true,
-          message: r.default.Mobile,
+          message: message.Mobile,
           trigger: 'change'
         }, {
           pattern: /^1\d{10}$/,

@@ -1,6 +1,8 @@
 <template>
   <div class="ivu-tag-select-option">
-    <Tag @on-change="handleChange" checkable :checked="checked" :color="color"></Tag>
+    <Tag @on-change="handleChange" checkable :checked="checked" :color="color" v-bind="tagProps">
+      <slot></slot>
+    </Tag>
   </div>
 </template>
 
@@ -15,7 +17,7 @@ export default {
     },
     tagProps: {
       type: Object,
-      default: function() {
+      default: function () {
         return {}
       }
     },
@@ -24,13 +26,13 @@ export default {
       default: 'primary'
     }
   },
-  data: function() {
+  data: function () {
     return {
-      checked: !1
+      checked: false
     }
   },
   methods: {
-    handleChange: function(flag) {
+    handleChange: function (flag) {
       this.checked = flag
       this.TagSelectInstance.handleChangeTag(this.name)
     }

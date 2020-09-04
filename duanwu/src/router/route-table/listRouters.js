@@ -19,7 +19,7 @@ export default {
         ...auth,
         title: '基础列表'
       },
-      component: () => import('')
+      component: () => import('@/views/list/basic-list')
     },
     {
       path: 'card-list',
@@ -28,7 +28,7 @@ export default {
         ...auth,
         title: '卡片列表'
       },
-      component: () => import('')
+      component: () => import('@/views/list/card-list')
     },
     {
       path: 'user-list',
@@ -37,7 +37,7 @@ export default {
         ...auth,
         title: '用户列表'
       },
-      component: () => import('')
+      component: () => import('@/views/list/user-list')
     },
     {
       path: 'goods-list',
@@ -46,7 +46,7 @@ export default {
         ...auth,
         title: '商品列表'
       },
-      component: () => import('')
+      component: () => import('@/views/list/goods-list')
     },
     {
       path: 'table-list',
@@ -55,7 +55,7 @@ export default {
         ...auth,
         title: '查询表格'
       },
-      component: () => import('')
+      component: () => import('@/views/list/table-list')
     }
   ]
 }
