@@ -1,6 +1,6 @@
 <template>
   <div class="i-frame">
-    <iframe v-if="ready" src frameborder="0" class="i-frame-iframe"></iframe>
+    <iframe v-if="ready" :src="src" frameborder="0" class="i-frame-iframe"></iframe>
   </div>
 </template>
 
@@ -36,7 +36,7 @@ export default {
   },
   watch: {
     margin: {
-      handler: function(event) {
+      handler: function (event) {
         this.$nextTick(() => {
           if (this.$content) {
             event
@@ -48,7 +48,7 @@ export default {
       immediate: true
     }
   },
-  mounted: function() {
+  mounted: function () {
     this.$content = document.getElementsByClassName('i-layout-content-main')[0]
     this.$copyright = document.getElementsByClassName('i-copyright')[0]
     this.$copyright &&
@@ -61,11 +61,11 @@ export default {
     )[0]
     this.$layoutContentMain &&
       this.$layoutContentMain.classList.add(mainFlexClass)
-    this.$nextTick(function() {
+    this.$nextTick(function () {
       this.ready = true
     })
   },
-  beforeDestroy: function() {
+  beforeDestroy: function () {
     this.$content && this.$content.classList.remove(noMarginClass)
     this.$copyright && this.$copyright.classList.remove(hideCopyrightClass)
     this.$layoutContent &&

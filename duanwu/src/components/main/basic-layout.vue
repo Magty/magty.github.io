@@ -142,17 +142,17 @@ export default {
     ]),
     ...mapState('admin/page', ['keepAlive']),
     ...mapGetters('admin/menu', ['hideSider']),
-    isHeaderStick: function() {
+    isHeaderStick: function () {
       return this.hideSider ? true : this.headerStick
     },
-    showHeader: function() {
+    showHeader: function () {
       let flag = true
       if (this.headerFix && this.headerHide && !this.headerVisible) {
         flag = false
       }
       return flag
     },
-    headerClasses: function() {
+    headerClasses: function () {
       return [
         'i-layout-header-color-'.concat(this.headerTheme),
         {
@@ -166,7 +166,7 @@ export default {
         }
       ]
     },
-    headerStyle: function() {
+    headerStyle: function () {
       const width = this.isHeaderStick
         ? 0
         : this.menuCollapse
@@ -176,20 +176,20 @@ export default {
         ? {}
         : { width: 'calc(100% - '.concat(width, 'px)') }
     },
-    siderClasses: function() {
+    siderClasses: function () {
       return {
         'i-layout-sider-fix': this.siderFix,
         'i-layout-sider-dark': this.siderTheme === 'dark'
       }
     },
-    contentClasses: function() {
+    contentClasses: function () {
       return {
         'i-layout-content-fix-with-header': this.headerFix,
         'i-layout-content-with-tabs': this.tabs,
         'i-layout-content-with-tabs-fix': this.tabs && this.tabsFix
       }
     },
-    insideClasses: function() {
+    insideClasses: function () {
       return {
         'i-layout-inside-fix-with-sider': this.siderFix,
         'i-layout-inside-fix-with-sider-collapse':
@@ -198,24 +198,24 @@ export default {
         'i-layout-inside-mobile': this.isMobile
       }
     },
-    drawerClasses: function() {
+    drawerClasses: function () {
       const classes = 'i-layout-drawer'
       return this.siderTheme === 'dark'
         ? `${classes} i-layout-drawer-dark`
         : classes
     },
-    menuSideWidth: function() {
+    menuSideWidth: function () {
       return this.menuCollapse ? 80 : menuSideWidth
     }
   },
   watch: {
-    hideSider: function() {
+    hideSider: function () {
       this.isDelayHideSider = true
       setTimeout(() => {
         this.isDelayHideSider = false
       }, 0)
     },
-    $route: function(newRoute, oldRoute) {
+    $route: function (newRoute, oldRoute) {
       if (newRoute.path === oldRoute.path && sameRouteForceUpdate) {
         this.handleReload()
       }
@@ -224,12 +224,13 @@ export default {
   methods: {
     ...mapMutations('admin/layout', ['updateMenuCollapse']),
     ...mapMutations('admin/page', ['keepAlivePush', 'keepAliveRemove']),
-    handleToggleDrawer: function(toggle) {
+    handleToggleDrawer: function (toggle) {
       this.showDrawer = typeof toogle === 'boolean' ? toggle : !this.showDrawer
     },
-    handleScroll: function() {
+    handleScroll: function () {
       if (this.headerHide) {
-        const scrollTop = document.body.scrollTop + document.documentElement.scrollTop
+        const scrollTop =
+          document.body.scrollTop + document.documentElement.scrollTop
         if (!this.ticking) {
           this.ticking = true
           animationFrame(() => {
@@ -248,7 +249,7 @@ export default {
         }
       }
     },
-    handleHeaderWidthChange: function() {
+    handleHeaderWidthChange: function () {
       const breadcrumb = this.$refs.breadcrumb
       if (breadcrumb) {
         breadcrumb.handleGetWidth()
@@ -256,7 +257,7 @@ export default {
       }
       // this.$refs.menuHead
     },
-    handleReload: function() {
+    handleReload: function () {
       const isCurrentAlive = this.keepAlive.indexOf(this.$route.name) > -1
       const routeName = this.$route.name
       if (isCurrentAlive) {
@@ -271,13 +272,13 @@ export default {
       })
     }
   },
-  mounted: function() {
+  mounted: function () {
     document.addEventListener('scroll', this.handleScroll, { passive: true })
   },
-  beforeDestroy: function() {
+  beforeDestroy: function () {
     document.removeEventListener('scroll', this.handleScroll)
   },
-  created: function() {
+  created: function () {
     this.isTablet && this.showSiderCollapse && this.updateMenuCollapse(true)
   }
 }
@@ -500,7 +501,7 @@ export default {
       margin: 24px;
       position: relative;
       &-flex {
-        display: flex;
+        flex: auto;
       }
       &-no-margin {
         margin: 0;

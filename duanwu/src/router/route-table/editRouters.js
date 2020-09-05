@@ -19,7 +19,7 @@ export default {
         ...auth,
         title: 'Quill'
       },
-      component: () => import('')
+      component: () => import('@/views/editor/quill')
     },
     {
       path: 'simpleMDE',
@@ -28,7 +28,7 @@ export default {
         ...auth,
         title: 'simpleMDE'
       },
-      component: () => import('')
+      component: () => import('@/views/editor/simpleMDE')
     }
   ]
 }

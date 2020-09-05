@@ -1,5 +1,6 @@
 import Main from '_c/main'
 import dashboardRouters from './dashboardRouters'
+import editRouters from './editRouters'
 import listRouters from './listRouters'
 import settingRouters from './settingRouters'
 // import userRouters from './userRouters'
@@ -68,6 +69,7 @@ export default [{
     ]
   },
   dashboardRouters,
+  editRouters,
   listRouters,
   settingRouters,
   resultRouters,

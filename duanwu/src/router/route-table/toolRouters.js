@@ -12,6 +12,24 @@ export default {
   meta: auth,
   component: Main,
   children: [{
+      path: 'frame/iview',
+      name: ''.concat(preFix, 'frame-iview'),
+      meta: {
+        ...auth,
+        title: 'View UI 官网'
+      },
+      component: () => import('@/views/tool/frame/iview.vue')
+    },
+    {
+      path: 'frame/iqiyi',
+      name: ''.concat(preFix, 'frame-iqiyi'),
+      meta: {
+        ...auth,
+        title: '爱奇艺'
+      },
+      component: () => import('@/views/tool/frame/iqiyi.vue')
+    },
+    {
       path: 'page-cache/on',
       name: ''.concat(preFix, 'page-cache-on'),
       meta: {
