@@ -1,7 +1,10 @@
 <template>
   <div class="ivu-footer-toolbar">
-    <div v-if="extra" class="ivu-footer-toolbar-left">
-      <slot name="extra"></slot>
+    <div v-if="extra || this.$slots.extra" class="ivu-footer-toolbar-left">
+      <slot name="extra">{{extra}}</slot>
+    </div>
+    <div class="ivu-footer-toolbar-right">
+      <slot></slot>
     </div>
   </div>
 </template>

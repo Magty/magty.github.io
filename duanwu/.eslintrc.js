@@ -15,6 +15,9 @@ module.exports = {
     'space-in-parens': 'off',
     'space-before-function-paren': 'off',
     // "max-len": ["error", {"code": 100}],
+    /* 'vue/no-parsing-error': [2, {
+      'x-invalid-end-tag': false
+    }], */
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
   }

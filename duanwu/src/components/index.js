@@ -7,6 +7,7 @@ import Description from './description'
 import DescriptionList from './description-list'
 import Ellipsis from './ellipsis'
 import Email from './email'
+import FooterToolbar from './footer-toolbar'
 import Grid from './grid'
 import GridItem from './grid-item'
 import Login from './login'
@@ -52,6 +53,7 @@ const components = {
   DescriptionList,
   Ellipsis,
   Email,
+  FooterToolbar,
   Grid,
   GridItem,
   Login,

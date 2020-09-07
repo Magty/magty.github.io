@@ -19,7 +19,7 @@ export default {
         ...auth,
         title: '基础表单'
       },
-      component: () => import('')
+      component: () => import('@/views/form/basic-form')
     },
     {
       path: 'advanced-form',
@@ -28,7 +28,7 @@ export default {
         ...auth,
         title: '高级表单'
       },
-      component: () => import('')
+      component: () => import('@/views/form/advanced-form')
     },
     {
       path: 'step-form',
@@ -37,7 +37,7 @@ export default {
         ...auth,
         title: '分步表单'
       },
-      component: () => import('')
+      component: () => import('@/views/form/step-form')
     },
     {
       path: 'detail',
@@ -46,7 +46,7 @@ export default {
         ...auth,
         title: '表单详情'
       },
-      component: () => import('')
+      component: () => import('@/views/form/detail')
     }
   ]
 }
