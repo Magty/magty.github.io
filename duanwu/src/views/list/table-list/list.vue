@@ -100,8 +100,8 @@
         <Badge v-else-if="3===row.status" status="error" text="异常"></Badge>
       </template>
       <template slot-scope="{ row }" slot="date">{{row.date | date_format('YYYY-MM-DD HH:mm:ss')}}</template>
-      <template slot-scope="{ row }" slot="action">
-        <a @click="handleUpdate(row)">编辑</a>
+      <template slot-scope="{ index }" slot="action">
+        <a @click="handleUpdate(index)">编辑</a>
         <Divider type="vertical"></Divider>
         <a>订阅警报</a>
       </template>
@@ -138,22 +138,26 @@ import radomStr from '@/utils/random_str'
 export default {
   data() {
     return {
-      columns: [{
+      columns: [
+        {
           type: 'selection',
           width: 60,
           align: 'center',
           show: true
-      }, {
+        },
+        {
           title: '规则名称',
           key: 'name',
           minWidth: 100,
           show: !0
-      }, {
+        },
+        {
           title: '描述',
           key: 'desc',
           minWidth: 100,
           show: true
-      }, {
+        },
+        {
           title: '服务调用次数',
           key: 'count',
           slot: 'count',
@@ -161,42 +165,51 @@ export default {
           minWidth: 140,
           sortable: 'custom',
           show: true
-      }, {
+        },
+        {
           title: '状态',
           slot: 'status',
           minWidth: 100,
           show: true,
-          filters: [{
+          filters: [
+            {
               label: '关闭',
               value: 0
-          }, {
+            },
+            {
               label: '运行中',
               value: 1
-          }, {
+            },
+            {
               label: '已上线',
               value: 2
-          }, {
+            },
+            {
               label: '异常',
               value: 3
-          }],
+            }
+          ],
           filterMultiple: true,
-          filterRemote: function(t) {
-              this.filterType = t
+          filterRemote: function (t) {
+            this.filterType = t
           }
-      }, {
+        },
+        {
           title: '上次调度时间',
           key: 'date',
           slot: 'date',
           minWidth: 140,
           sortable: 'custom',
           show: true
-      }, {
+        },
+        {
           title: '操作',
           slot: 'action',
           align: 'center',
           minWidth: 140,
           show: true
-      }],
+        }
+      ],
       loading: false,
       list: [],
       selectedData: [],
@@ -207,14 +220,16 @@ export default {
       filterType: null,
       showCreate: false,
       createData: {
-          desc: ''
+        desc: ''
       },
       createRules: {
-          desc: [{
-              required: true,
-              message: '请输入描述',
-              trigger: 'blur'
-          }]
+        desc: [
+          {
+            required: true,
+            message: '请输入描述',
+            trigger: 'blur'
+          }
+        ]
       },
       creating: true,
       updateIndex: -1,
@@ -231,15 +246,15 @@ export default {
           return a[sort] > b[sort] ? 1 : -1
         })
       } else if (this.sortType === 'desc') {
-          list = list.sort((a, b) => {
+        list = list.sort((a, b) => {
           return a[sort] < b[sort] ? 1 : -1
         })
       }
       if (this.filterType && this.filterType.length) {
-        list = list.filter(item => this.filterType.indexOf(item.status) >= 0)
+        list = list.filter((item) => this.filterType.indexOf(item.status) >= 0)
       }
-      const nameArray = this.selectedData.map(item => item.name)
-      list.map(item => {
+      const nameArray = this.selectedData.map((item) => item.name)
+      list.map((item) => {
         item._checked = nameArray.indexOf(item.name) >= 0
         return item
       })
@@ -252,13 +267,13 @@ export default {
     },
     totalSelectedCount() {
       let total = 0
-      this.selectedData.forEach(item => {
+      this.selectedData.forEach((item) => {
         total += item.count
       })
       return total
     },
     tableColumns() {
-      return [...this.columns].filter(column => column.show)
+      return [...this.columns].filter((column) => column.show)
     }
   },
   methods: {
@@ -268,7 +283,10 @@ export default {
       data.desc = '这是一段描述'
       data.count = Math.floor(1000 * Math.random() + 400)
       data.status = Math.floor(4 * Math.random())
-      data.date = new Date(new Date().getTime() - Math.floor(365 * 24 * 60 * 60 * 1000 * Math.random()))
+      data.date = new Date(
+        new Date().getTime() -
+          Math.floor(365 * 24 * 60 * 60 * 1000 * Math.random())
+      )
       data._checked = false
       return data
     },
@@ -277,7 +295,7 @@ export default {
       this.loading = true
       setTimeout(() => {
         const data = []
-        for ( let i = 0; i < 100; i++) {
+        for (let i = 0; i < 100; i++) {
           data.push(this.mockData())
         }
         this.list = data
@@ -296,20 +314,26 @@ export default {
       this.selectedData.push(row)
     },
     handleSelectCancel(selection, row) {
-      const index = this.selectedData.findIndex(item => item.name === row.name)
+      const index = this.selectedData.findIndex(
+        (item) => item.name === row.name
+      )
       this.selectedData.splice(index, 1)
     },
     handleSelectAll(selection) {
-      selection.forEach(select => {
-        const index = this.selectedData.findIndex(item => item.name === select.name)
+      selection.forEach((select) => {
+        const index = this.selectedData.findIndex(
+          (item) => item.name === select.name
+        )
         if (index < 0) {
           this.selectedData.push(select)
         }
       })
     },
     handleSelectAllCancel() {
-      this.dataWithPage.forEach(item => {
-        const index = this.selectedData.findIndex(select => select.name === item.name)
+      this.dataWithPage.forEach((item) => {
+        const index = this.selectedData.findIndex(
+          (select) => select.name === item.name
+        )
         if (index > 0) {
           this.selectedData.splice(index, 1)
         }
@@ -320,8 +344,8 @@ export default {
     },
     handleClickItem(name) {
       if (name === 'delete') {
-        this.selectedData.forEach(select => {
-          const index = this.list.findIndex(item => item.name === select.name)
+        this.selectedData.forEach((select) => {
+          const index = this.list.findIndex((item) => item.name === select.name)
           if (index >= 0) {
             this.list.splice(index, 1)
           }
@@ -335,7 +359,7 @@ export default {
       this.showCreate = true
     },
     handleCreate() {
-      this.$refs.create.validate(valid => {
+      this.$refs.create.validate((valid) => {
         if (valid) {
           if (this.updateIndex < 0) {
             const mockData = this.mockOneData()
@@ -345,7 +369,7 @@ export default {
             this.$Message.success('创建成功')
           } else {
             const name = this.dataWithPage[this.updateIndex].name
-            const index = this.list.findIndex(item => item.name === name)
+            const index = this.list.findIndex((item) => item.name === name)
             this.list[index].desc = this.createData.desc
             this.$Message.success('修改成功')
           }
@@ -379,7 +403,7 @@ export default {
       this.getData()
     },
     handleResetColumn() {
-      this.columns = this.columns.map(item => {
+      this.columns = this.columns.map((item) => {
         item.show = true
         return item
       })
