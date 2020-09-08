@@ -8,7 +8,12 @@
     </div>
     <div v-if="this.$slots.extra" class="ivu-avatar-list-item ivu-avatar-list-item-excess">
       <Avatar :style="excessStyle" :size="size" :shape="shape">
-        <slot name="excess">{{'+' + list.length - max}}</slot>
+        <slot name="extra"></slot>
+      </Avatar>
+    </div>
+    <div v-else-if="list.length>max" class="ivu-avatar-list-item ivu-avatar-list-item-excess">
+      <Avatar :style="excessStyle" :size="size" :shape="shape">
+        <slot name="excess">+{{list.length-max}}</slot>
       </Avatar>
     </div>
   </div>
@@ -24,11 +29,11 @@ export default {
       default: () => []
     },
     shape: {
-      validator: value => oneOf(value, ['circle', 'square']),
+      validator: (value) => oneOf(value, ['circle', 'square']),
       default: 'circle'
     },
     size: {
-      validator: value => oneOf(value, ['small', 'large', 'default']),
+      validator: (value) => oneOf(value, ['small', 'large', 'default']),
       default: 'default'
     },
     excessStyle: {
@@ -43,7 +48,7 @@ export default {
       default: true
     },
     placement: {
-      validator: value =>
+      validator: (value) =>
         oneOf(value, [
           'top',
           'top-start',
@@ -62,7 +67,7 @@ export default {
     }
   },
   computed: {
-    currentList: function() {
+    currentList: function () {
       const length = this.list.length
       const max = this.max
       return length <= max
