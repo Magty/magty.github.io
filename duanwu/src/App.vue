@@ -10,7 +10,7 @@ export default {
   name: 'app',
   methods: {
     ...mapMutations('admin/layout', ['setDevice']),
-    handleWindowResize: function() {
+    handleWindowResize: function () {
       this.handleMatchMedia()
     },
     handleMatchMedia() {
@@ -22,7 +22,7 @@ export default {
         : this.setDevice('Desktop')
     }
   },
-  mounted: function() {
+  mounted: function () {
     on(window, 'resize', this.handleWindowResize)
     this.$on('hook:beforeDestroy', () => {
       off(window, 'resize', this.handleWindowResize)
@@ -31,7 +31,7 @@ export default {
     setTimeout(() => {
       this.$Notice.open({
         duration: 0,
-        render: h => {
+        render: (h) => {
           return (
             <div>
               <div class="ivu-mb" style="line-height:normal">
@@ -83,7 +83,7 @@ export default {
       })
     }, 15 * 1000)
   },
-  beforeDestroy: function() {
+  beforeDestroy: function () {
     // off(window, 'resize', this.handleWindowResize)
   }
 }

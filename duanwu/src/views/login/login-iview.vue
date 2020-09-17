@@ -58,24 +58,33 @@ export default {
       autoLogin: true
     }
   },
+  beforeCreate() {
+    console.log('before' + this.autoLogin)
+  },
+  created() {
+    console.log('created' + this.autoLogin)
+  },
+  mounted() {
+    console.log('mounted' + this.autoLogin)
+  },
   methods: {
     ...mapActions('admin/account', ['login']),
     async handleSubmit(valid, { username, password }) {
       if (valid) {
         try {
-        await this.login({
-          username,
-          password
-        })
-        if (this.$route.query.redirect) {
-          this.$router.replace({ path: this.$route.query.redirect })
-        } else {
-          this.$router.push({ name: homeName, replace: true })
+          await this.login({
+            username,
+            password
+          })
+          if (this.$route.query.redirect) {
+            this.$router.replace({ path: this.$route.query.redirect })
+          } else {
+            this.$router.push({ name: homeName, replace: true })
+          }
+        } catch (err) {
+          console.log(err)
+          this.$Message.error('登录失败！')
         }
-      } catch (err) {
-        console.log(err)
-        this.$Message.error('登录失败！')
-      }
       }
     }
   }
